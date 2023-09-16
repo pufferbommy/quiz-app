@@ -34,7 +34,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const { category, sub } = params;
 
   const fetchQuestions = async () => {
-    const url = `/api/${categoryMap.get(category)}/get-all/${sub}`;
+    const url = `/api/${categoryMap.get(category)}/${sub}`;
     const response = await fetch(url);
     const data = await response.json();
     setQuestions(data.mockData);
@@ -58,12 +58,9 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   };
 
   const onSubmit = async (values: VerseSchema) => {
-    const url = `/api/${categoryMap.get(category as string)}/check/${sub}`;
+    const url = `/api/${categoryMap.get(category as string)}/${sub}`;
     const response = await fetch(url, {
       body: JSON.stringify(values),
-      headers: {
-        'Content-Type': 'application/json',
-      },
       method: 'POST',
     });
     const data = await response.json();

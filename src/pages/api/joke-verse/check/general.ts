@@ -46,7 +46,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     if (isCorrectAnswer) {
-      return res.status(200).json({ message: true, mockAnswer });
+      return res.status(200).json({
+        message: true,
+        description: 'คำอธิบายโจ๊ก',
+      });
     } else {
       return res.status(200).json({ message: false });
     }

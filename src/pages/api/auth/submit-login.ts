@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const user = {
-      username: 'testquiz',
+      username: 'testquiz@mail.com',
       password: '987654321',
     }
     const { username, password } = req.body as {

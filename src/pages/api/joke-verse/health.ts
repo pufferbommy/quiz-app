@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -7,30 +7,25 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       second: 'หมู',
       third: 'กา',
       fourth: 'ไก่',
-    }
+    };
     const { inputFirst, inputSecond, inputThird, inputFourth } = req.body as {
-      inputFirst: string
-      inputSecond: string
-      inputThird: string
-      inputFourth: string
-    }
-    if (
-      inputFirst === undefined ||
-      inputSecond === undefined ||
-      inputThird === undefined ||
-      inputFourth === undefined
-    )
-      res.status(404).json({ message: 'Not found your answer' })
-    if (
+      inputFirst: string;
+      inputSecond: string;
+      inputThird: string;
+      inputFourth: string;
+    };
+    const isInputIsInCorrect =
       inputFirst != mockAnswer.first ||
       inputSecond != mockAnswer.second ||
       inputThird != mockAnswer.third ||
-      inputFourth != mockAnswer.fourth
-    ) {
-      res.status(200).json({ message: false })
+      inputFourth != mockAnswer.fourth;
+    if (req.body === undefined)
+      res.status(404).json({ message: 'Not found your answer' });
+    if (isInputIsInCorrect) {
+      res.status(200).json({ message: false });
     }
-    res.status(200).json({ message: true })
+    res.status(200).json({ message: true });
   } else {
-    res.status(405).end()
+    res.status(405).end();
   }
 }

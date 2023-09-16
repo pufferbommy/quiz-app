@@ -14,19 +14,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       inputThird: string;
       inputFourth: string;
     };
-    const isInputUndefined =
-      inputFirst === undefined ||
-      inputSecond === undefined ||
-      inputThird === undefined ||
-      inputFourth === undefined;
-    const isInputCorrect =
+    const isInputInCorrect =
       inputFirst != mockAnswer.first ||
       inputSecond != mockAnswer.second ||
       inputThird != mockAnswer.third ||
       inputFourth != mockAnswer.fourth;
-    if (isInputUndefined)
+    if (req.body === undefined)
       res.status(404).json({ message: 'Not found your answer' });
-    if (isInputCorrect) {
+    if (isInputInCorrect) {
       res.status(200).json({ message: false });
     }
     res.status(200).json({ message: true });

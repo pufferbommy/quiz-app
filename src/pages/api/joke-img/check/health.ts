@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { imgSchema } from '@/zodSchema/general';
+import { imgSchema } from '../../../../../zodSchema/general';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;

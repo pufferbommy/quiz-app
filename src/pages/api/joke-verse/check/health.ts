@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { verseSchema } from '@/zodSchema/general';
+import { verseSchema } from '../../../../../zodSchema/general';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;

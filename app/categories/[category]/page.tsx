@@ -1,12 +1,9 @@
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '../../../components/ui/button';
 
-const Category = () => {
-  const router = useRouter();
-
-  const { category } = router.query;
+const Category = ({ params }: { params: { category: string } }) => {
+  const { category } = params;
 
   const subCategories = [
     {

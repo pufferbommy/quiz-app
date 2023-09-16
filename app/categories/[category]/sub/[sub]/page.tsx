@@ -1,21 +1,21 @@
+'use client';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '../../../../../components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from '../../../../../components/ui/form';
+import { Input } from '../../../../../components/ui/input';
 import { useForm } from 'react-hook-form';
-import { VerseSchema, verseSchema } from '@/zodSchema/general';
+import { VerseSchema, verseSchema } from '../../../../../zodSchema/general';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const Sub = () => {
+const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const [questions, setQuestions] = useState<
     {
       imgPaht: string;
@@ -31,12 +31,10 @@ const Sub = () => {
     ['image', 'joke-img'],
   ]);
 
-  const router = useRouter();
-
-  const { category, sub } = router.query;
+  const { category, sub } = params;
 
   const fetchQuestions = async () => {
-    const url = `/api/${categoryMap.get(category as string)}/get-all/${sub}`;
+    const url = `/api/${categoryMap.get(category)}/get-all/${sub}`;
     const response = await fetch(url);
     const data = await response.json();
     setQuestions(data.mockData);

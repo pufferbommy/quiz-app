@@ -1,3 +1,4 @@
+import './globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -12,7 +13,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <main>{children}</main>
+        <div className="px-3">
+          <div className="max-w-md relative mx-auto pt-36">
+            <main>{children}</main>
+          </div>
+        </div>
       </body>
     </html>
   );

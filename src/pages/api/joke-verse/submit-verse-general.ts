@@ -2,30 +2,30 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const mockData = {
+    const mockAnswer = {
       first: 'หมู',
       second: 'หมา',
       third: 'กา',
       fourth: 'ไก่',
     }
-    const userData = {
-      first: req.body.first,
-      second: req.body.second,
-      third: req.body.third,
-      fourth: req.body.fourth,
+    const { inputFirst, inputSecond, inputThird, inputFourth } = req.body as {
+      inputFirst: string
+      inputSecond: string
+      inputThird: string
+      inputFourth: string
     }
     if (
-      userData.first === undefined ||
-      userData.second === undefined ||
-      userData.third === undefined ||
-      userData.fourth === undefined
+      inputFirst === undefined ||
+      inputSecond === undefined ||
+      inputThird === undefined ||
+      inputFourth === undefined
     )
       res.status(404).json({ message: 'Not found your answer' })
     if (
-      userData.first != mockData.first ||
-      userData.second != mockData.second ||
-      userData.third != mockData.third ||
-      userData.fourth != mockData.fourth
+      inputFirst != mockAnswer.first ||
+      inputSecond != mockAnswer.second ||
+      inputThird != mockAnswer.third ||
+      inputFourth != mockAnswer.fourth
     ) {
       res.status(200).json({ message: false })
     }

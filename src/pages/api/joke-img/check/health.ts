@@ -1,13 +1,33 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiRequest, NextApiResponse } from 'next';
+
+import { imgSchema } from '@/zodSchema/general';
+
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const mockData = 'หมูขี่ม้า'
-  const { answer } = req.body as { answer: string; group: number; no: number }
-  if (req.method === 'POST') {
-    if (req.body === undefined || answer === '') {
-      res.status(404).json({ message: 'Not found your answer' })
-    }
-    res.status(200).json({ message: answer === mockData })
+  const { method } = req;
+
+  if (method != 'POST') {
+    return res.status(405).json({
+      error: { message: `Method ${method} Not Allowed` },
+    });
+  }
+
+  const response = imgSchema.safeParse(req.body);
+
+  if (!response.success) {
+    return res.status(400).json({
+      error: { message: response.error },
+    });
+  }
+
+  const { answer } = response.data;
+
+  const mockAnswer = 'ม้าขี่หมู';
+
+  const isCorrect = answer != '' && answer === mockAnswer;
+
+  if (!isCorrect) {
+    res.status(404).json({ message: false });
   } else {
-    res.status(405).end()
+    res.status(200).json({ message: true });
   }
 }

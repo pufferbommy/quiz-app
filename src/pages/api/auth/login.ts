@@ -17,9 +17,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       res.status(404).json({ message: 'Not found' })
     }
     res.status(200).json({
-      message:
-        username.replace(/\s/g, '') === user.username &&
-        password.replace(/\s/g, '') === user.password,
+      message: username === user.username && password === user.password,
     })
   } else {
     res.status(405).end()

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { loginSchema } from '@/zodSchema/login';
+import { loginSchema } from '@/zodSchema/auth/login';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;

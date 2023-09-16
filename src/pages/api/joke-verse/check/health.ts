@@ -15,14 +15,19 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       inputFourth: string;
     };
     if (inputFirst && inputSecond && inputThird && inputFourth) {
-      const isInputCorrect =
-        inputFirst === mockAnswer.first &&
-        inputSecond === mockAnswer.second &&
-        inputThird === mockAnswer.third &&
-        inputFourth === mockAnswer.fourth;
-      isInputCorrect
-        ? res.status(200).json({ message: true, answer: mockAnswer })
-        : res.status(200).json({ message: false });
+      const isInputCorrect = () => {
+        return (
+          inputFirst === mockAnswer.first &&
+          inputSecond === mockAnswer.second &&
+          inputThird === mockAnswer.third &&
+          inputFourth === mockAnswer.fourth
+        );
+      };
+      if (isInputCorrect()) {
+        res.status(200).json({ message: true, answer: mockAnswer });
+      } else {
+        res.status(200).json({ message: false });
+      }
     } else {
       res.status(404).json({ message: 'Not found your answer' });
     }

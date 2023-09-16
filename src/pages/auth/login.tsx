@@ -1,12 +1,11 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { loginSchema } from '@/zodSchema/login';
+import { LoginSchema, loginSchema } from '@/zodSchema/auth/login';
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -25,7 +24,7 @@ const Login = () => {
 
   const [error, setError] = useState<string | null>(null);
 
-  const form = useForm<z.infer<typeof loginSchema>>({
+  const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
@@ -33,7 +32,7 @@ const Login = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+  const onSubmit = async (values: LoginSchema) => {
     const response = await fetch('/api/auth/login', {
       body: JSON.stringify(values),
       headers: {

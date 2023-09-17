@@ -28,7 +28,7 @@ const Login = () => {
   });
 
   const onSubmit = async (values: LoginSchema) => {
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch('/api/v1/auth/login', {
       body: JSON.stringify(values),
       headers: {
         'Content-Type': 'application/json',

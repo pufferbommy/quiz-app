@@ -29,7 +29,7 @@ const Register = () => {
   });
 
   const onSubmit = async (values: RegisterSchema) => {
-    const response = await fetch('/api/auth/register', {
+    const response = await fetch('/api/v1/auth/register', {
       body: JSON.stringify(values),
       headers: {
         'Content-Type': 'application/json',

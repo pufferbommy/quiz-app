@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { registerSchema } from '../../../../schemas/auth/register';
+import { registerSchema } from '../../../../../schemas/auth/register';
 
 export async function POST(request: NextRequest) {
   const json = await request.json();

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { verseSchema } from '../../../../schemas/joke/verse';
+import { verseSchema } from '../../../../../schemas/joke/verse';
 
 export async function GET() {
   const mockData = [

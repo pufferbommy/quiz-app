@@ -71,6 +71,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
       </div>
       {category === 'verse' ? (
         <VerseForm
+          questionNo={questionNo}
           url={`/api/v1/joke-${category}/${sub}`}
           setQuestionIndex={setQuestionIndex}
         />

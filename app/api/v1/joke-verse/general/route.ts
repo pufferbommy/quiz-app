@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
   ];
 
   const matchingItem = mockAnswers.find((element) => {
-    element.no === no;
+    return element.no === no;
   });
 
   const isCorrect = () => {

@@ -19,7 +19,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const { category, sub } = params;
 
   const fetchQuestions = async () => {
-    const url = `/api/joke-${category}/${sub}`;
+    const url = `/api/v1/joke-${category}/${sub}`;
     const response = await fetch(url);
     const data = await response.json();
     setQuestions(data.mockData);
@@ -71,13 +71,13 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
       </div>
       {category === 'verse' ? (
         <VerseForm
-          url={`/api/joke-${category}/${sub}`}
+          url={`/api/v1/joke-${category}/${sub}`}
           setQuestionIndex={setQuestionIndex}
         />
       ) : (
         <ImageForm
           questionNo={questionNo}
-          url={`/api/joke-${category}/${sub}`}
+          url={`/api/v1/joke-${category}/${sub}`}
           setQuestionIndex={setQuestionIndex}
         />
       )}

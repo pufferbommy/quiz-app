@@ -82,7 +82,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
             className="text-4xl mb-8 text-center"
             dangerouslySetInnerHTML={{ __html: title() || '&nbsp;' }}
           />
-          <div className="relative rounded-md border border-input overflow-hidden mb-4 aspect-video">
+          <div className="relative rounded-md border border-input overflow-hidden mb-8 aspect-video">
             {questionImgPath && (
               <Image
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33.33vw"

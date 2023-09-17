@@ -11,14 +11,15 @@ import {
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { VerseSchema, verseSchema } from '../../schemas/joke/verse';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
   url: string;
+  questionNo: number;
   setQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const VerseForm = ({ url, setQuestionIndex }: Props) => {
+const VerseForm = ({ url, questionNo, setQuestionIndex }: Props) => {
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [description, setDescription] = useState<string>('');
 
@@ -40,6 +41,7 @@ const VerseForm = ({ url, setQuestionIndex }: Props) => {
   };
 
   const onSubmit = async (values: VerseSchema) => {
+    console.log(values);
     const response = await fetch(url, {
       body: JSON.stringify(values),
       method: 'POST',
@@ -53,6 +55,12 @@ const VerseForm = ({ url, setQuestionIndex }: Props) => {
       form.reset();
     }
   };
+
+  useEffect(() => {
+    if (questionNo) {
+      form.setValue('no', questionNo);
+    }
+  }, [questionNo, form]);
 
   return (
     <>

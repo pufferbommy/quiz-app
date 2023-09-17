@@ -26,15 +26,10 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const [description, setDescription] = useState<string>('');
   const [questionIndex, setQuestionIndex] = useState(0);
 
-  const categoryMap = new Map<string, string>([
-    ['verse', 'joke-verse'],
-    ['image', 'joke-img'],
-  ]);
-
   const { category, sub } = params;
 
   const fetchQuestions = async () => {
-    const url = `/api/${categoryMap.get(category)}/${sub}`;
+    const url = `/api/joke-${category}/${sub}`;
     const response = await fetch(url);
     const data = await response.json();
     setQuestions(data.mockData);

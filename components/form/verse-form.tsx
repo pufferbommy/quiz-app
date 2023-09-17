@@ -20,8 +20,16 @@ interface Props {
 }
 
 const VerseForm = ({ url, questionNo, setQuestionIndex }: Props) => {
-  const [isCorrect, setIsCorrect] = useState<boolean>(false);
-  const [description, setDescription] = useState<string>('');
+  const [response, setResponse] = useState<{
+    isCorrect: boolean;
+    answer?: {
+      first: string;
+      second: string;
+      third: string;
+      fourth: string;
+    };
+    meaning?: string;
+  } | null>(null);
 
   const form = useForm<VerseSchema>({
     resolver: zodResolver(verseSchema),
@@ -35,8 +43,7 @@ const VerseForm = ({ url, questionNo, setQuestionIndex }: Props) => {
 
   const handleNextQuestionClick = () => {
     setQuestionIndex((prev) => prev + 1);
-    setIsCorrect(false);
-    setDescription('');
+    setResponse(null);
     form.reset();
   };
 
@@ -46,9 +53,8 @@ const VerseForm = ({ url, questionNo, setQuestionIndex }: Props) => {
       method: 'POST',
     });
     const data = await response.json();
-    if (data.message === true) {
-      setIsCorrect(true);
-      setDescription(data.description);
+    if (data.isCorrect) {
+      setResponse(data);
     } else {
       setQuestionIndex((prev) => prev + 1);
       form.reset();
@@ -63,7 +69,7 @@ const VerseForm = ({ url, questionNo, setQuestionIndex }: Props) => {
 
   return (
     <>
-      {!isCorrect && (
+      {!response?.isCorrect && (
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -130,8 +136,28 @@ const VerseForm = ({ url, questionNo, setQuestionIndex }: Props) => {
           </form>
         </Form>
       )}
-      {isCorrect && <p className="text-center mb-8">{description}</p>}
-      {isCorrect && (
+      {response?.isCorrect && (
+        <>
+          <div className="text-center mb-8">
+            <h2 className="text-2xl underline underline-offset-4 mb-4">เฉลย</h2>
+            <ul className="text-lg space-y-4 mb-4">
+              {response.answer &&
+                Object.keys(response.answer).map((key, index) => (
+                  <li className="flex justify-between" key={key}>
+                    <span>ช่องที่ {index + 1}</span>
+                    <span>
+                      {response.answer?.[key as keyof typeof response.answer]}
+                    </span>
+                  </li>
+                ))}
+            </ul>
+            <div className="bg-secondary border p-4 tracking-wide rounded-md">
+              {response.meaning}
+            </div>
+          </div>
+        </>
+      )}
+      {response?.isCorrect && (
         <Button onClick={handleNextQuestionClick} className="w-full">
           ถัดไป
         </Button>

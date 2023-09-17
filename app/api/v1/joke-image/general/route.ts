@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(
     {
-      message: isCorrect,
+      isCorrect,
       answer: isCorrect ? matchingItem?.ans : undefined,
       meaning: isCorrect ? matchingItem.meaning : undefined,
     },

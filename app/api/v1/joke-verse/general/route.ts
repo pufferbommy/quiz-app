@@ -85,51 +85,22 @@ export async function POST(request: NextRequest) {
   });
 
   const isCorrect = () => {
-    const isEmptyAnswer =
-      inputFirst == '' ||
-      inputSecond === '' ||
-      inputThird === '' ||
-      inputFourth === '';
-
-    const isCorrectAnswer =
+    return (
       matchingItem?.ans.first === inputFirst &&
       matchingItem?.ans.second === inputSecond &&
       matchingItem?.ans.third === inputThird &&
-      matchingItem?.ans.fourth === inputFourth;
-
-    if (isEmptyAnswer) {
-      return NextResponse.json(
-        {
-          message: 'Not found your answer',
-        },
-        {
-          status: 404,
-        }
-      );
-    }
-
-    if (isCorrectAnswer) {
-      return NextResponse.json(
-        {
-          message: true,
-          answer: matchingItem.ans,
-          description: 'ยังไม่พร้อมใช้งาน',
-        },
-        {
-          status: 200,
-        }
-      );
-    } else {
-      return NextResponse.json(
-        {
-          message: false,
-        },
-        {
-          status: 200,
-        }
-      );
-    }
+      matchingItem?.ans.fourth === inputFourth
+    );
   };
 
-  return isCorrect();
+  return NextResponse.json(
+    {
+      isCorrect,
+      answer: isCorrect() ? matchingItem?.ans : undefined,
+      meaning: isCorrect() ? 'ยังไม่พร้อมใช้งาน' : undefined,
+    },
+    {
+      status: 200,
+    }
+  );
 }

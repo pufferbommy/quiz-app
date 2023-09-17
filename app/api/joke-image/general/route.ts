@@ -4,11 +4,11 @@ import { imgSchema } from '../../../../zodSchema/joke/img';
 
 export async function GET() {
   const mockData = [
-    { no: 1, imgPaht: '' },
-    { no: 2, imgPaht: '' },
-    { no: 3, imgPaht: '' },
-    { no: 4, imgPaht: '' },
-    { no: 5, imgPaht: '' },
+    { no: 1, imgPath: '' },
+    { no: 2, imgPath: '' },
+    { no: 3, imgPath: '' },
+    { no: 4, imgPath: '' },
+    { no: 5, imgPath: '' },
   ];
   return NextResponse.json({ mockData }, { status: 200 });
 }

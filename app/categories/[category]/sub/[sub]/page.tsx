@@ -18,7 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const [questions, setQuestions] = useState<
     {
-      imgPaht: string;
+      imgPath: string;
       no: number;
     }[]
   >([]);
@@ -79,7 +79,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
     return category === 'verse' ? 'กลอนปริศนา' : 'โจ๊กภาพปริศนา';
   };
 
-  const question = questions[questionIndex]?.imgPaht;
+  const question = questions[questionIndex]?.imgPath;
 
   return (
     <>

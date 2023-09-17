@@ -45,16 +45,14 @@ const Register = () => {
 
   return (
     <>
-      <div className="relative rounded-full w-[75%] mx-auto overflow-hidden aspect-square">
+      <div className="relative rounded-full w-[50%] mx-auto overflow-hidden aspect-square">
         <Image src="/auth.jpg" alt="auth" fill />
       </div>
-      <h1 className="text-2xl mb-3 mt-6 font-bold text-center">
-        สมัครสมาชิกใหม่
-      </h1>
+      <h1 className="text-2xl mb-4 mt-8 font-bold text-center">สมัครสมาชิก</h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-3"
+          className="flex flex-col gap-4"
         >
           <FormField
             control={form.control}
@@ -96,7 +94,7 @@ const Register = () => {
               </FormItem>
             )}
           />
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-4">
             <Link href="/auth/login">
               <Button className="w-full" variant="outline">
                 ย้อนกลับ

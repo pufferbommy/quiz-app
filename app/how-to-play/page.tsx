@@ -13,8 +13,8 @@ const HowToPlay = () => {
 
   return (
     <>
-      <h1 className="text-4xl mb-6 text-center">วิธีการเล่น</h1>
-      <ul className="space-y-3 mb-6">
+      <h1 className="text-4xl mb-8 text-center">วิธีการเล่น</h1>
+      <ul className="space-y-4 mb-8">
         {instructions.map((instruction, index) => (
           <li key={index}>
             <span className="mr-2">{index + 1}.</span>

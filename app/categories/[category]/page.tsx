@@ -18,8 +18,8 @@ const Category = ({ params }: { params: { category: string } }) => {
 
   return (
     <>
-      <h1 className="text-4xl mb-6 text-center">โจ๊กปริศนา</h1>
-      <div className="w-full flex flex-col gap-3">
+      <h1 className="text-4xl mb-8 text-center">โจ๊กปริศนา</h1>
+      <div className="w-full flex flex-col gap-4">
         {subCategories.map(({ name, value }) => (
           <>
             {value === 'health' ? (

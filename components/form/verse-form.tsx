@@ -67,7 +67,7 @@ const VerseForm = ({ url, questionNo, setQuestionIndex }: Props) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-3"
+            className="flex flex-col gap-4"
           >
             <FormField
               control={form.control}
@@ -117,7 +117,7 @@ const VerseForm = ({ url, questionNo, setQuestionIndex }: Props) => {
                 </FormItem>
               )}
             />
-            <div className="grid grid-cols-2 mt-3 gap-3">
+            <div className="grid grid-cols-2 mt-4 gap-4">
               <Button
                 onClick={handleNextQuestionClick}
                 type="button"
@@ -130,7 +130,7 @@ const VerseForm = ({ url, questionNo, setQuestionIndex }: Props) => {
           </form>
         </Form>
       )}
-      {isCorrect && <p className="text-center mb-6">{description}</p>}
+      {isCorrect && <p className="text-center mb-8">{description}</p>}
       {isCorrect && (
         <Button onClick={handleNextQuestionClick} className="w-full">
           ถัดไป

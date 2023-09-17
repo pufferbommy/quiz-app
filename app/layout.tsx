@@ -13,8 +13,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="px-3">
-          <div className="max-w-md relative mx-auto pt-20">
+        <div className="px-4">
+          <div className="max-w-md relative mx-auto pt-32">
             <main>{children}</main>
           </div>
         </div>

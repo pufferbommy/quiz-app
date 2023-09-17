@@ -76,7 +76,7 @@ const ImageForm = ({ url, questionNo, setQuestionIndex }: Props) => {
                 </FormItem>
               )}
             />
-            <div className="grid grid-cols-2 mt-6 gap-3">
+            <div className="grid grid-cols-2 mt-8 gap-4">
               <Button
                 onClick={handleNextQuestionClick}
                 type="button"
@@ -89,7 +89,7 @@ const ImageForm = ({ url, questionNo, setQuestionIndex }: Props) => {
           </form>
         </Form>
       )}
-      {isCorrect && <p className="text-center mb-6">{description}</p>}
+      {isCorrect && <p className="text-center mb-8">{description}</p>}
       {isCorrect && (
         <Button onClick={handleNextQuestionClick} className="w-full">
           ถัดไป

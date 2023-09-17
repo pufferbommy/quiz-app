@@ -5,7 +5,7 @@ import { Button } from '../../components/ui/button';
 const Settings = () => {
   return (
     <>
-      <h1 className="text-4xl mb-6 text-center">การตั้งค่า</h1>
+      <h1 className="text-4xl mb-8 text-center">การตั้งค่า</h1>
       <div className="text-center">
         <Link href="/">
           <Button>ย้อนกลับ</Button>

@@ -17,8 +17,8 @@ const Page = () => {
 
   return (
     <>
-      <h1 className="text-4xl mb-6 text-center">โจ๊กปริศนา</h1>
-      <div className="w-full flex flex-col gap-3">
+      <h1 className="text-4xl mb-8 text-center">โจ๊กปริศนา</h1>
+      <div className="w-full flex flex-col gap-4">
         {categories.map(({ name, path }) => (
           <Link key={name} href={path}>
             <Button className="w-full" variant="outline">
@@ -29,7 +29,7 @@ const Page = () => {
         <Button disabled variant="outline">
           อันดับประจำสัปดาห์
         </Button>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-4">
           {/* <Link href="/settings"> */}
           <Button disabled className="w-full" variant="outline">
             การตั้งค่า

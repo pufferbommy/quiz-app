@@ -23,7 +23,7 @@ const Category = ({ params }: { params: { category: string } }) => {
         {subCategories.map(({ name, value }) => (
           <>
             {value === 'health' ? (
-              <Button disabled className="w-full" variant="outline">
+              <Button key={name} disabled className="w-full" variant="outline">
                 {name}
               </Button>
             ) : (

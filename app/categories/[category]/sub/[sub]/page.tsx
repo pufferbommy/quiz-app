@@ -12,7 +12,7 @@ import {
 } from '../../../../../components/ui/form';
 import { Input } from '../../../../../components/ui/input';
 import { useForm } from 'react-hook-form';
-import { VerseSchema, verseSchema } from '../../../../../zodSchema/joke/verse';
+import { VerseSchema, verseSchema } from '../../../../../schemas/joke/verse';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const Sub = ({ params }: { params: { category: string; sub: string } }) => {

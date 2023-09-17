@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { loginSchema } from '../../../../zodSchema/auth/login';
+import { loginSchema } from '../../../../schemas/auth/login';
 
 export async function POST(request: NextRequest) {
   const json = await request.json();

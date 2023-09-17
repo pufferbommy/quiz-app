@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { imgSchema } from '../../../../zodSchema/joke/img';
+import { imgSchema } from '../../../../schemas/joke/img';
 
 export async function GET() {
   const mockData = [

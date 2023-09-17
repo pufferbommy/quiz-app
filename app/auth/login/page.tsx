@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { LoginSchema, loginSchema } from '../../../zodSchema/auth/login';
+import { LoginSchema, loginSchema } from '../../../schemas/auth/login';
 
 import { Input } from '../../../components/ui/input';
 import { Button } from '../../../components/ui/button';

@@ -11,14 +11,15 @@ import {
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { ImgSchema, imgSchema } from '../../schemas/joke/img';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
   url: string;
+  questionNo: number;
   setQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ImageForm = ({ url, setQuestionIndex }: Props) => {
+const ImageForm = ({ url, questionNo, setQuestionIndex }: Props) => {
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [description, setDescription] = useState<string>('');
 
@@ -26,6 +27,7 @@ const ImageForm = ({ url, setQuestionIndex }: Props) => {
     resolver: zodResolver(imgSchema),
     defaultValues: {
       answer: '',
+      group: 'image',
     },
   });
 
@@ -37,7 +39,6 @@ const ImageForm = ({ url, setQuestionIndex }: Props) => {
   };
 
   const onSubmit = async (values: ImgSchema) => {
-    console.log('hi');
     const response = await fetch(url, {
       body: JSON.stringify(values),
       method: 'POST',
@@ -51,6 +52,12 @@ const ImageForm = ({ url, setQuestionIndex }: Props) => {
       form.reset();
     }
   };
+
+  useEffect(() => {
+    if (questionNo) {
+      form.setValue('no', questionNo);
+    }
+  }, [questionNo, form]);
 
   return (
     <>

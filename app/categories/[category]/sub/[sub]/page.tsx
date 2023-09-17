@@ -36,7 +36,8 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
     return category === 'verse' ? 'กลอนปริศนา' : 'โจ๊กภาพปริศนา';
   };
 
-  const question = questions[questionIndex]?.imgPath;
+  const questionImgPath = questions[questionIndex]?.imgPath;
+  const questionNo = questions[questionIndex]?.no;
 
   return (
     <>
@@ -57,12 +58,12 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
         dangerouslySetInnerHTML={{ __html: title() || '&nbsp;' }}
       />
       <div className="relative rounded-md border border-input overflow-hidden mb-6 aspect-video">
-        {question && (
+        {questionImgPath && (
           <Image
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33.33vw"
             priority
             quality={75}
-            src={question}
+            src={questionImgPath}
             alt=""
             fill
           />
@@ -75,6 +76,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
         />
       ) : (
         <ImageForm
+          questionNo={questionNo}
           url={`/api/joke-${category}/${sub}`}
           setQuestionIndex={setQuestionIndex}
         />

@@ -29,14 +29,60 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { inputFirst, inputSecond, inputThird, inputFourth } = response.data;
+  const { no, inputFirst, inputSecond, inputThird, inputFourth } =
+    response.data;
 
-  const mockAnswer = {
-    first: 'หมู',
-    second: 'หมา',
-    third: 'กา',
-    fourth: 'ไก่',
-  };
+  const mockAnswers = [
+    {
+      no: 1,
+      ans: {
+        first: 'ทดสอบ',
+        second: 'ทดสอบ',
+        third: 'ทดสอบ',
+        fourth: 'ทดสอบ',
+      },
+    },
+    {
+      no: 2,
+      ans: {
+        first: 'หมู',
+        second: 'ไป',
+        third: 'ไก่',
+        fourth: 'มา',
+      },
+    },
+    {
+      no: 3,
+      ans: {
+        first: 'ทดสอบ',
+        second: 'ทดสอบ',
+        third: 'ทดสอบ',
+        fourth: 'ทดสอบ',
+      },
+    },
+    {
+      no: 4,
+      ans: {
+        first: 'แกว่ง',
+        second: 'เท้า',
+        third: 'หา',
+        fourth: 'เสี้ยน',
+      },
+    },
+    {
+      no: 5,
+      ans: {
+        first: 'จับ',
+        second: 'หี',
+        third: 'สอง',
+        fourth: 'มือ',
+      },
+    },
+  ];
+
+  const matchingItem = mockAnswers.find((element) => {
+    element.no === no;
+  });
 
   const isCorrect = () => {
     const isEmptyAnswer =
@@ -46,10 +92,10 @@ export async function POST(request: NextRequest) {
       inputFourth === '';
 
     const isCorrectAnswer =
-      inputFirst === mockAnswer.first &&
-      inputSecond === mockAnswer.second &&
-      inputThird === mockAnswer.third &&
-      inputFourth === mockAnswer.fourth;
+      matchingItem?.ans.first === inputFirst &&
+      matchingItem?.ans.second === inputSecond &&
+      matchingItem?.ans.third === inputThird &&
+      matchingItem?.ans.fourth === inputFourth;
 
     if (isEmptyAnswer) {
       return NextResponse.json(
@@ -66,7 +112,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           message: true,
-          description: 'คำอธิบายโจ๊ก',
+          answer: matchingItem.ans,
+          description: 'ยังไม่พร้อมใช้งาน',
         },
         {
           status: 200,

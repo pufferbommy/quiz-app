@@ -4,11 +4,11 @@ import { verseSchema } from '../../../../zodSchema/joke/verse';
 
 export async function GET() {
   const mockData = [
-    { no: 1, imgPaht: '/images/verse/general/01.JPG' },
-    { no: 2, imgPaht: '/images/verse/general/02.JPG' },
-    { no: 3, imgPaht: '/images/verse/general/03.JPG' },
-    { no: 4, imgPaht: '/images/verse/general/04.JPG' },
-    { no: 5, imgPaht: '/images/verse/general/05.JPG' },
+    { no: 1, imgPaht: '' },
+    { no: 2, imgPaht: '' },
+    { no: 3, imgPaht: '' },
+    { no: 4, imgPaht: '' },
+    { no: 5, imgPaht: '' },
   ];
   return NextResponse.json({ mockData }, { status: 200 });
 }

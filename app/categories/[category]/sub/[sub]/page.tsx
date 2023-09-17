@@ -12,7 +12,7 @@ import {
 } from '../../../../../components/ui/form';
 import { Input } from '../../../../../components/ui/input';
 import { useForm } from 'react-hook-form';
-import { VerseSchema, verseSchema } from '../../../../../zodSchema/general';
+import { VerseSchema, verseSchema } from '../../../../../zodSchema/joke/verse';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const Sub = ({ params }: { params: { category: string; sub: string } }) => {
@@ -84,7 +84,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
     return category === 'verse' ? 'กลอนปริศนา' : 'โจ๊กภาพปริศนา';
   };
 
-  const question = questions[questionIndex]?.imgPaht || '';
+  const question = questions[questionIndex]?.imgPaht;
 
   return (
     <>
@@ -105,7 +105,16 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
         dangerouslySetInnerHTML={{ __html: title() || '&nbsp;' }}
       />
       <div className="relative rounded-md border border-input overflow-hidden mb-6 aspect-video">
-        {question && <Image src={question} alt="" fill />}
+        {question && (
+          <Image
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33.33vw"
+            priority
+            quality={75}
+            src={question}
+            alt=""
+            fill
+          />
+        )}
       </div>
       {!isCorrect && (
         <Form {...form}>
@@ -162,7 +171,13 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
               )}
             />
             <div className="grid grid-cols-2 mt-3 gap-3">
-              <Button variant="outline">ข้าม</Button>
+              <Button
+                onClick={handleNextQuestionClick}
+                type="button"
+                variant="outline"
+              >
+                ข้าม
+              </Button>
               <Button type="submit">ส่ง</Button>
             </div>
           </form>

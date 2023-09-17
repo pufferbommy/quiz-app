@@ -85,17 +85,18 @@ export async function POST(request: NextRequest) {
   });
 
   const isCorrect = () => {
+    const ans = matchingItem?.ans;
     return (
-      matchingItem?.ans.first === inputFirst &&
-      matchingItem?.ans.second === inputSecond &&
-      matchingItem?.ans.third === inputThird &&
-      matchingItem?.ans.fourth === inputFourth
+      ans?.first === inputFirst &&
+      ans?.second === inputSecond &&
+      ans?.third === inputThird &&
+      ans?.fourth === inputFourth
     );
   };
 
   return NextResponse.json(
     {
-      isCorrect,
+      isCorrect: isCorrect(),
       answer: isCorrect() ? matchingItem?.ans : undefined,
       meaning: isCorrect() ? 'ยังไม่พร้อมใช้งาน' : undefined,
     },

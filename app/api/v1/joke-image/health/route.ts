@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { no, group, answer } = response.data;
+  const { answer } = response.data;
 
   const mockAnswer = 'ม้าขี่หมู';
 

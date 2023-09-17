@@ -14,7 +14,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="px-3">
-          <div className="max-w-md relative mx-auto pt-36">
+          <div className="max-w-md relative mx-auto pt-20">
             <main>{children}</main>
           </div>
         </div>

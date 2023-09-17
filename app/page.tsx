@@ -26,12 +26,15 @@ const Page = () => {
             </Button>
           </Link>
         ))}
+        <Button disabled variant="outline">
+          อันดับประจำสัปดาห์
+        </Button>
         <div className="grid grid-cols-2 gap-3">
-          <Link href="/settings">
-            <Button className="w-full" variant="outline">
-              การตั้งค่า
-            </Button>
-          </Link>
+          {/* <Link href="/settings"> */}
+          <Button disabled className="w-full" variant="outline">
+            การตั้งค่า
+          </Button>
+          {/* </Link> */}
           <Link href="/how-to-play">
             <Button className="w-full" variant="outline">
               วิธีการเล่น

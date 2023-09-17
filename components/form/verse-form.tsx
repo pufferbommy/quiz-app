@@ -41,7 +41,6 @@ const VerseForm = ({ url, questionNo, setQuestionIndex }: Props) => {
   };
 
   const onSubmit = async (values: VerseSchema) => {
-    console.log(values);
     const response = await fetch(url, {
       body: JSON.stringify(values),
       method: 'POST',

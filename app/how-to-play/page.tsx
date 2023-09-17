@@ -1,19 +1,30 @@
-import { Button } from '../../components/ui/button';
 import Link from 'next/link';
 
+import { Button } from '../../components/ui/button';
+
 const HowToPlay = () => {
+  const instructions = [
+    'การพิมพ์คำตอบโจ๊กภาพและโจ๊กปริศนาสามารถพิมพ์ได้ที่ช่องว่างใต้ภาพปริศนา',
+    'หากตอบคำถามถูกต้องจะมีคำเฉลยและคำอธิบายความหมายของข้อนั้นๆและเปลี่ยนเป็นคำถามข้อถัดไปได้',
+    "หากไม่สามารถตอบคำถามหรืออยากข้ามคำถามข้อนั้น สามารถกดคำว่า 'ถัดไป' เพื่อไปคำถามข้อต่อไป",
+    'หากไม่สามารถตอบคำถามโจ๊กภาพและโจ๊กปริศนาได้จะไม่เฉลยคำตอบของข้อนั้นๆ',
+    'ผู้เล่นสามารถเล่นได้โดยไม่จำกัดเวลาในแต่ละข้อ',
+  ];
+
   return (
     <>
       <h1 className="text-4xl mb-6 text-center">วิธีการเล่น</h1>
-      <div className="w-full aspect-[1/1] rounded-md bg-slate-300"></div>
-      <div className="grid grid-cols-2 gap-3 mt-6">
-        <Link href="/">
-          <Button className="w-full" variant="outline">
-            ย้อนกลับ
-          </Button>
-        </Link>
-        <Button variant="outline">ถัดไป</Button>
-      </div>
+      <ul className="space-y-3 mb-6">
+        {instructions.map((instruction, index) => (
+          <li key={index}>
+            <span className="mr-2">{index + 1}.</span>
+            {instruction}
+          </li>
+        ))}
+      </ul>
+      <Link href="/">
+        <Button className="w-full">ย้อนกลับ</Button>
+      </Link>
     </>
   );
 };

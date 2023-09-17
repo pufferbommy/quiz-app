@@ -54,10 +54,10 @@ export async function POST(request: NextRequest) {
     {
       no: 3,
       ans: {
-        first: 'ทดสอบ',
-        second: 'ทดสอบ',
-        third: 'ทดสอบ',
-        fourth: 'ทดสอบ',
+        first: 'น้ำตา',
+        second: 'น้ำชา',
+        third: 'น้ำยา',
+        fourth: 'น้ำมา',
       },
     },
     {
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
       no: 5,
       ans: {
         first: 'จับ',
-        second: 'หี',
+        second: 'ปลา',
         third: 'สอง',
         fourth: 'มือ',
       },

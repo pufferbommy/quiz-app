@@ -45,15 +45,12 @@ const Register = () => {
 
   return (
     <>
-      <div className="relative rounded-md overflow-hidden aspect-video">
-        <Image
-          className="object-cover object-[left_0_top_80%]"
-          src="/auth.jpg"
-          alt="auth"
-          fill
-        />
+      <div className="relative rounded-full w-[75%] mx-auto overflow-hidden aspect-square">
+        <Image src="/auth.jpg" alt="auth" fill />
       </div>
-      <h1 className="text-2xl mt-6 mb-3 font-bold">สมัครสมาชิกใหม่</h1>
+      <h1 className="text-2xl mb-3 mt-6 font-bold text-center">
+        สมัครสมาชิกใหม่
+      </h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

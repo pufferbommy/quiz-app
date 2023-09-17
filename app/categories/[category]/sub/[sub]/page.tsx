@@ -27,21 +27,20 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
     setQuestions(data.mockData);
   };
 
+  const questionsLength = questions.length;
+  const questionImgPath = questions[questionIndex]?.imgPath;
+  const questionNo = questions[questionIndex]?.no;
+
   useEffect(() => {
     if (category && sub) {
       fetchQuestions();
     }
   }, [category, sub]);
 
-  useEffect(() => {}, []);
-
   const title = () => {
     if (!category) return '';
     return category === 'verse' ? 'กลอนปริศนา' : 'โจ๊กภาพปริศนา';
   };
-
-  const questionImgPath = questions[questionIndex]?.imgPath;
-  const questionNo = questions[questionIndex]?.no;
 
   return (
     <>
@@ -96,12 +95,14 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
           </div>
           {category === 'verse' ? (
             <VerseForm
+              questionsLength={questionsLength}
               questionNo={questionNo}
               url={`/api/v1/joke-${category}/${sub}`}
               setQuestionIndex={setQuestionIndex}
             />
           ) : (
             <ImageForm
+              questionsLength={questionsLength}
               questionNo={questionNo}
               url={`/api/v1/joke-${category}/${sub}`}
               setQuestionIndex={setQuestionIndex}

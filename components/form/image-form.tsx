@@ -16,10 +16,16 @@ import { useEffect, useState } from 'react';
 interface Props {
   url: string;
   questionNo: number;
+  questionsLength: number;
   setQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ImageForm = ({ url, questionNo, setQuestionIndex }: Props) => {
+const ImageForm = ({
+  url,
+  questionNo,
+  questionsLength,
+  setQuestionIndex,
+}: Props) => {
   const [response, setResponse] = useState<{
     isCorrect: boolean;
     answer?: string;
@@ -35,7 +41,7 @@ const ImageForm = ({ url, questionNo, setQuestionIndex }: Props) => {
   });
 
   const handleNextQuestionClick = () => {
-    setQuestionIndex((prev) => prev + 1);
+    setQuestionIndex((prev) => (prev + 1) % questionsLength);
     setResponse(null);
     form.reset();
   };
@@ -49,8 +55,7 @@ const ImageForm = ({ url, questionNo, setQuestionIndex }: Props) => {
     if (data.isCorrect) {
       setResponse(data);
     } else {
-      setQuestionIndex((prev) => prev + 1);
-      form.reset();
+      handleNextQuestionClick();
     }
   };
 

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
-import { Button } from '../../components/ui/button';
+import { Button } from '@/components/ui/button';
+import Title from '@/components/text/title';
 
 const HowToPlay = () => {
   const instructions = [
@@ -13,8 +14,8 @@ const HowToPlay = () => {
 
   return (
     <>
-      <h1 className="text-4xl mb-8 text-center">วิธีการเล่น</h1>
-      <ul className="space-y-4 mb-8">
+      <Title>วิธีการเล่น</Title>
+      <ul className="space-y-4 mb-4">
         {instructions.map((instruction, index) => (
           <li key={index}>
             <span className="mr-2">{index + 1}.</span>

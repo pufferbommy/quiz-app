@@ -1,11 +1,11 @@
 'use client';
+import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-import { Button } from '../../../../../components/ui/button';
-import VerseForm from '../../../../../components/form/verse-form';
-import ImageForm from '../../../../../components/form/image-form';
-import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import VerseForm from '@/components/form/verse-form';
+import ImageForm from '@/components/form/image-form';
 
 const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const [questions, setQuestions] = useState<
@@ -46,7 +46,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
     <>
       {isBreak ? (
         <>
-          <div className="relative rounded-full w-[75%] mb-6 mx-auto overflow-hidden aspect-square">
+          <div className="relative rounded-full w-[75%] mb-8 mx-auto overflow-hidden aspect-square">
             <Image src="/auth.jpg" alt="auth" fill />
           </div>
           <div className="flex flex-col gap-3">
@@ -78,10 +78,10 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
             </svg>
           </Button>
           <h1
-            className="text-4xl mb-8 text-center"
+            className="text-4xl mb-4 text-center"
             dangerouslySetInnerHTML={{ __html: title() || '&nbsp;' }}
           />
-          <div className="relative rounded-md border border-input overflow-hidden mb-8 aspect-video">
+          <div className="relative rounded-md border border-input overflow-hidden mb-4 aspect-video">
             {questionImgPath && (
               <Image
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33.33vw"

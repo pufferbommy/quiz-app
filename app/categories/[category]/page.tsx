@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
-import { Button } from '../../../components/ui/button';
+import { Button } from '@/components/ui/button';
+import Title from '@/components/text/title';
 
 const Category = ({ params }: { params: { category: string } }) => {
   const { category } = params;
@@ -18,7 +19,7 @@ const Category = ({ params }: { params: { category: string } }) => {
 
   return (
     <>
-      <h1 className="text-4xl mb-8 text-center">โจ๊กปริศนา</h1>
+      <Title>โจ๊กปริศนา</Title>
       <div className="w-full flex flex-col gap-4">
         {subCategories.map(({ name, value }) => (
           <>

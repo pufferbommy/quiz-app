@@ -1,11 +1,12 @@
 import Link from 'next/link';
 
-import { Button } from '../../components/ui/button';
+import { Button } from '@/components/ui/button';
+import Title from '@/components/text/title';
 
 const Settings = () => {
   return (
     <>
-      <h1 className="text-4xl mb-8 text-center">การตั้งค่า</h1>
+      <Title>การตั้งค่า</Title>
       <div className="text-center">
         <Link href="/">
           <Button>ย้อนกลับ</Button>

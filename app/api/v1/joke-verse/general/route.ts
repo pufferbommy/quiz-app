@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
   return NextResponse.json(
     {
       isCorrect: isCorrect(),
-      answer: isCorrect() ? matchingItem?.ans : undefined,
+      answer: isCorrect() ? matchingItem?.answer : undefined,
       meaning: isCorrect() ? 'ยังไม่พร้อมใช้งาน' : undefined,
     },
     {

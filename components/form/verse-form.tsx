@@ -16,16 +16,10 @@ import { VerseSchema, verseSchema } from '../../schemas/joke/verse';
 interface Props {
   url: string;
   questionNo: number;
-  questionsLength: number;
-  setQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
+  nextQuestion: () => void;
 }
 
-const VerseForm = ({
-  url,
-  questionNo,
-  questionsLength,
-  setQuestionIndex,
-}: Props) => {
+const VerseForm = ({ url, questionNo, nextQuestion }: Props) => {
   const [response, setResponse] = useState<{
     isCorrect: boolean;
     answer?: {
@@ -49,7 +43,7 @@ const VerseForm = ({
   });
 
   const handleNextQuestionClick = () => {
-    setQuestionIndex((prev) => (prev + 1) % questionsLength);
+    nextQuestion();
     setResponse(null);
     form.reset();
   };

@@ -16,16 +16,10 @@ import { ImgSchema, imgSchema } from '../../schemas/joke/img';
 interface Props {
   url: string;
   questionNo: number;
-  questionsLength: number;
-  setQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
+  nextQuestion: () => void;
 }
 
-const ImageForm = ({
-  url,
-  questionNo,
-  questionsLength,
-  setQuestionIndex,
-}: Props) => {
+const ImageForm = ({ url, questionNo, nextQuestion }: Props) => {
   const [response, setResponse] = useState<{
     isCorrect: boolean;
     answer?: string;
@@ -42,7 +36,7 @@ const ImageForm = ({
   });
 
   const handleNextQuestionClick = () => {
-    setQuestionIndex((prev) => (prev + 1) % questionsLength);
+    nextQuestion();
     setResponse(null);
     form.reset();
   };

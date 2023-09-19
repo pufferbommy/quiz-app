@@ -9,6 +9,11 @@ export async function GET() {
     { no: 3, imgPath: '/images/verse/general/03.JPG' },
     { no: 4, imgPath: '/images/verse/general/04.JPG' },
     { no: 5, imgPath: '/images/verse/general/05.JPG' },
+    { no: 6, imgPath: '/images/verse/general/06.JPG' },
+    { no: 7, imgPath: '/images/verse/general/07.JPG' },
+    { no: 8, imgPath: '/images/verse/general/08.JPG' },
+    { no: 9, imgPath: '/images/verse/general/09.JPG' },
+    { no: 10, imgPath: '/images/verse/general/10.JPG' },
   ];
   return NextResponse.json({ mockData }, { status: 200 });
 }
@@ -75,6 +80,51 @@ export async function POST(request: NextRequest) {
         second: 'ปลา',
         third: 'สอง',
         fourth: 'มือ',
+      },
+    },
+    {
+      no: 6,
+      answer: {
+        first: 'ทดสอบ',
+        second: 'ทดสอบ',
+        third: 'ทดสอบ',
+        fourth: 'ทดสอบ',
+      },
+    },
+    {
+      no: 7,
+      answer: {
+        first: 'ทดสอบ',
+        second: 'ทดสอบ',
+        third: 'ทดสอบ',
+        fourth: 'ทดสอบ',
+      },
+    },
+    {
+      no: 8,
+      answer: {
+        first: 'ทดสอบ',
+        second: 'ทดสอบ',
+        third: 'ทดสอบ',
+        fourth: 'ทดสอบ',
+      },
+    },
+    {
+      no: 9,
+      answer: {
+        first: 'คัด',
+        second: 'ตึง',
+        third: 'ดึง',
+        fourth: 'เต้า',
+      },
+    },
+    {
+      no: 10,
+      answer: {
+        first: 'น้ำนม',
+        second: 'น้ำฝน',
+        third: 'น้ำใจ',
+        fourth: 'น้ำสุรา',
       },
     },
   ];

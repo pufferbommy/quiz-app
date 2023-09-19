@@ -21,8 +21,8 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const question = questions[questionIndex] || null;
 
   const nextQuestion = () => {
-    setTotalRounds((prev) => prev + 1);
-    setQuestionIndex((prev) => (prev + 1) % questions.length);
+    setTotalRounds(prev => prev + 1);
+    setQuestionIndex(prev => (prev + 1) % questions.length);
   };
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
             >
               กำลังโหลดรูป...
             </span>
-            {questions.map((q) => (
+            {questions.map(q => (
               <Fragment key={q.no + q.imgPath}>
                 {q.no === question.no && (
                   <Image
@@ -98,6 +98,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
           </div>
           {category === 'verse' ? (
             <VerseForm
+              isLoadingImage={isLoadingImage}
               setIsLoadingImage={setIsLoadingImage}
               questionNo={question?.no}
               url={url}
@@ -105,6 +106,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
             />
           ) : (
             <ImageForm
+              isLoadingImage={isLoadingImage}
               setIsLoadingImage={setIsLoadingImage}
               questionNo={question?.no}
               url={url}

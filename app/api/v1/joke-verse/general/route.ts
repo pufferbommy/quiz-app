@@ -29,8 +29,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { no, inputFirst, inputSecond, inputThird, inputFourth } =
-    response.data;
+  const { no, inputFirst, inputSecond, inputThird, inputFourth } = response.data;
 
   const mockAnswers = [
     {
@@ -80,7 +79,7 @@ export async function POST(request: NextRequest) {
     },
   ];
 
-  const matchingItem = mockAnswers.find((element) => {
+  const matchingItem = mockAnswers.find(element => {
     return element.no === no;
   });
 

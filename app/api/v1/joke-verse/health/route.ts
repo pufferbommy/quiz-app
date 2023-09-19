@@ -40,10 +40,7 @@ export async function POST(request: NextRequest) {
 
   const isCorrect = () => {
     const isEmptyAnswer =
-      inputFirst == '' ||
-      inputSecond === '' ||
-      inputThird === '' ||
-      inputFourth === '';
+      inputFirst == '' || inputSecond === '' || inputThird === '' || inputFourth === '';
 
     const isCorrectAnswer =
       inputFirst === mockAnswer.first &&

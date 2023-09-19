@@ -2,13 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '../ui/form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { useToast } from '../ui/use-toast';
@@ -18,15 +12,11 @@ interface Props {
   url: string;
   questionNo: number | undefined;
   nextQuestion: () => void;
+  isLoadingImage: boolean;
   setIsLoadingImage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const VerseForm = ({
-  url,
-  questionNo,
-  nextQuestion,
-  setIsLoadingImage,
-}: Props) => {
+const VerseForm = ({ url, questionNo, nextQuestion, isLoadingImage, setIsLoadingImage }: Props) => {
   const { toast } = useToast();
   const [response, setResponse] = useState<{
     isCorrect: boolean;
@@ -51,11 +41,11 @@ const VerseForm = ({
   });
 
   const handleSkipQuestionClick = () => {
-    setIsLoadingImage(true);
     handleNextQuestionClick();
   };
 
   const handleNextQuestionClick = () => {
+    setIsLoadingImage(true);
     nextQuestion();
     setResponse(null);
     form.reset();
@@ -77,7 +67,6 @@ const VerseForm = ({
       setResponse(data);
     } else {
       handleNextQuestionClick();
-      setIsLoadingImage(true);
     }
     setIsSubmitting(false);
   };
@@ -92,10 +81,7 @@ const VerseForm = ({
     <>
       {!response?.isCorrect && (
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
               disabled={isSubmitting}
               control={form.control}
@@ -116,11 +102,7 @@ const VerseForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder="ช่องใส่คำตอบ"
-                      {...field}
-                    />
+                    <Input disabled={isSubmitting} placeholder="ช่องใส่คำตอบ" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -152,16 +134,16 @@ const VerseForm = ({
                 </FormItem>
               )}
             />
-            <div className="grid grid-cols-2 mt-4 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <Button
-                disabled={isSubmitting}
+                disabled={isSubmitting || isLoadingImage}
                 onClick={handleSkipQuestionClick}
                 type="button"
                 variant="outline"
               >
                 ข้าม
               </Button>
-              <Button disabled={isSubmitting} type="submit">
+              <Button disabled={isSubmitting || isLoadingImage} type="submit">
                 {!isSubmitting ? 'ส่ง' : 'กำลังส่ง...'}
               </Button>
             </div>
@@ -172,14 +154,12 @@ const VerseForm = ({
         <>
           <div className="text-center mb-4">
             <h2 className="text-2xl underline underline-offset-4 mb-4">เฉลย</h2>
-            <ul className="text-lg space-y-4 mb-4">
+            <ul className="space-y-4 mb-4">
               {response.answer &&
                 Object.keys(response.answer).map((key, index) => (
                   <li className="flex justify-between" key={key}>
-                    <span>ช่องที่ {index + 1}</span>
-                    <span>
-                      {response.answer?.[key as keyof typeof response.answer]}
-                    </span>
+                    <span>คำตอบที่ {index + 1}</span>
+                    <span>{response.answer?.[key as keyof typeof response.answer]}</span>
                   </li>
                 ))}
             </ul>

@@ -40,29 +40,19 @@ const LoginForm = () => {
       method: 'POST',
     });
     const data: StatusMessageResponse = await response.json();
+    toast({
+      title: data.status,
+      description: data.message,
+      variant: data.status === 'success' ? 'default' : 'destructive',
+    });
     if (data.status === 'success') {
-      setTimeout(() => {
-        toast({
-          title: data.status,
-          description: data.message,
-        });
-      }, 600);
+      router.push('/');
+    } else {
+      form.reset();
+      form.setValue('email', values.email);
+      form.setValue('password', values.password);
     }
-    setTimeout(() => {
-      if (data.status === 'error') {
-        toast({
-          title: data.status,
-          description: data.message,
-          variant: 'destructive',
-        });
-        form.reset();
-        form.setValue('email', values.email);
-        form.setValue('password', values.password);
-      } else {
-        router.push('/');
-      }
-      setIsSubmitting(false);
-    }, 1000);
+    setIsSubmitting(false);
   };
 
   return (

@@ -11,15 +11,23 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { useToast } from '../ui/use-toast';
 import { VerseSchema, verseSchema } from '../../schemas/joke/verse';
 
 interface Props {
   url: string;
-  questionNo: number;
+  questionNo: number | undefined;
   nextQuestion: () => void;
+  setIsLoadingImage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const VerseForm = ({ url, questionNo, nextQuestion }: Props) => {
+const VerseForm = ({
+  url,
+  questionNo,
+  nextQuestion,
+  setIsLoadingImage,
+}: Props) => {
+  const { toast } = useToast();
   const [response, setResponse] = useState<{
     isCorrect: boolean;
     answer?: {
@@ -42,6 +50,11 @@ const VerseForm = ({ url, questionNo, nextQuestion }: Props) => {
     },
   });
 
+  const handleSkipQuestionClick = () => {
+    setIsLoadingImage(true);
+    handleNextQuestionClick();
+  };
+
   const handleNextQuestionClick = () => {
     nextQuestion();
     setResponse(null);
@@ -55,14 +68,18 @@ const VerseForm = ({ url, questionNo, nextQuestion }: Props) => {
       method: 'POST',
     });
     const data = await response.json();
-    setTimeout(() => {
-      if (data.isCorrect) {
-        setResponse(data);
-      } else {
-        handleNextQuestionClick();
-      }
-      setIsSubmitting(false);
-    }, 1000);
+    toast({
+      title: 'ผลการตรวจคำตอบ',
+      description: data.isCorrect ? 'ถูกต้อง' : 'ผิด',
+      variant: data.isCorrect ? 'default' : 'destructive',
+    });
+    if (data.isCorrect) {
+      setResponse(data);
+    } else {
+      handleNextQuestionClick();
+      setIsLoadingImage(true);
+    }
+    setIsSubmitting(false);
   };
 
   useEffect(() => {
@@ -138,7 +155,7 @@ const VerseForm = ({ url, questionNo, nextQuestion }: Props) => {
             <div className="grid grid-cols-2 mt-4 gap-4">
               <Button
                 disabled={isSubmitting}
-                onClick={handleNextQuestionClick}
+                onClick={handleSkipQuestionClick}
                 type="button"
                 variant="outline"
               >

@@ -11,15 +11,23 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { useToast } from '../ui/use-toast';
 import { ImgSchema, imgSchema } from '../../schemas/joke/img';
 
 interface Props {
   url: string;
-  questionNo: number;
+  questionNo: number | undefined;
   nextQuestion: () => void;
+  setIsLoadingImage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ImageForm = ({ url, questionNo, nextQuestion }: Props) => {
+const ImageForm = ({
+  url,
+  questionNo,
+  nextQuestion,
+  setIsLoadingImage,
+}: Props) => {
+  const { toast } = useToast();
   const [response, setResponse] = useState<{
     isCorrect: boolean;
     answer?: string;
@@ -35,7 +43,12 @@ const ImageForm = ({ url, questionNo, nextQuestion }: Props) => {
     },
   });
 
+  const handleSkipQuestionClick = () => {
+    handleNextQuestionClick();
+  };
+
   const handleNextQuestionClick = () => {
+    setIsLoadingImage(true);
     nextQuestion();
     setResponse(null);
     form.reset();
@@ -48,14 +61,17 @@ const ImageForm = ({ url, questionNo, nextQuestion }: Props) => {
       method: 'POST',
     });
     const data = await response.json();
-    setTimeout(() => {
-      if (data.isCorrect) {
-        setResponse(data);
-      } else {
-        handleNextQuestionClick();
-      }
-      setIsSubmitting(false);
-    }, 1000);
+    toast({
+      title: 'ผลการตรวจคำตอบ',
+      description: data.isCorrect ? 'ถูกต้อง' : 'ผิด',
+      variant: data.isCorrect ? 'default' : 'destructive',
+    });
+    if (data.isCorrect) {
+      setResponse(data);
+    } else {
+      handleNextQuestionClick();
+    }
+    setIsSubmitting(false);
   };
 
   useEffect(() => {
@@ -85,14 +101,14 @@ const ImageForm = ({ url, questionNo, nextQuestion }: Props) => {
             <div className="grid grid-cols-2 mt-4 gap-4">
               <Button
                 disabled={isSubmitting}
-                onClick={handleNextQuestionClick}
+                onClick={handleSkipQuestionClick}
                 type="button"
                 variant="outline"
               >
                 ข้าม
               </Button>
               <Button disabled={isSubmitting} type="submit">
-                ส่ง
+                {!isSubmitting ? 'ส่ง' : 'กำลังส่ง...'}
               </Button>
             </div>
           </form>

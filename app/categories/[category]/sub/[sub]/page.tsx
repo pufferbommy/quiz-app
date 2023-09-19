@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import useQuestions from '@/hooks/useQuestions';
 import { Button } from '@/components/ui/button';
@@ -10,17 +10,26 @@ import ImageForm from '@/components/form/image-form';
 
 const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const { category, sub } = params;
-  const questions = useQuestions(category, sub);
+  const { questions, shuffleQuestions } = useQuestions(category, sub);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [isBreak, setIsBreak] = useState(false);
+  const [totalRounds, setTotalRounds] = useState(1);
+  const [isLoadingImage, setIsLoadingImage] = useState(true);
 
-  const question = questions[questionIndex] || {};
   const title = category === 'verse' ? 'กลอนปริศนา' : 'โจ๊กภาพปริศนา';
   const url = `/api/v1/joke-${category}/${sub}`;
+  const question = questions[questionIndex] || null;
 
   const nextQuestion = () => {
+    setTotalRounds((prev) => prev + 1);
     setQuestionIndex((prev) => (prev + 1) % questions.length);
   };
+
+  useEffect(() => {
+    if (totalRounds % questions.length === 1) {
+      shuffleQuestions();
+    }
+  }, [totalRounds]);
 
   return (
     <>
@@ -59,26 +68,45 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
           </Button>
           <h1 className="text-4xl mb-4 text-center">{title}</h1>
           <div className="relative rounded-md border border-input overflow-hidden mb-4 aspect-video">
-            {question.imgPath && (
-              <Image
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33.33vw"
-                priority
-                quality={75}
-                src={question.imgPath}
-                alt=""
-                fill
-              />
-            )}
+            <span
+              className={`absolute z-10 inset-0 duration-300 flex justify-center items-center ${
+                isLoadingImage ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              กำลังโหลดรูป...
+            </span>
+            {questions.map((q) => (
+              <Fragment key={q.no + q.imgPath}>
+                {q.no === question.no && (
+                  <Image
+                    key={q.imgPath}
+                    className={`transition-opacity duration-500 ${
+                      isLoadingImage ? 'opacity-0' : 'opacity-100'
+                    }`}
+                    priority
+                    quality={75}
+                    src={q.imgPath}
+                    onLoadingComplete={() => {
+                      setIsLoadingImage(false);
+                    }}
+                    alt=""
+                    fill
+                  />
+                )}
+              </Fragment>
+            ))}
           </div>
           {category === 'verse' ? (
             <VerseForm
-              questionNo={question.no}
+              setIsLoadingImage={setIsLoadingImage}
+              questionNo={question?.no}
               url={url}
               nextQuestion={nextQuestion}
             />
           ) : (
             <ImageForm
-              questionNo={question.no}
+              setIsLoadingImage={setIsLoadingImage}
+              questionNo={question?.no}
               url={url}
               nextQuestion={nextQuestion}
             />

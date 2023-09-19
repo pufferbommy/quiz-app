@@ -34,29 +34,29 @@ export async function POST(request: NextRequest) {
   const answers = [
     {
       no: 1,
-      ans: 'ไก่แก่แม่ปลาช่อน',
+      answer: 'ไก่แก่แม่ปลาช่อน',
       meaning: 'หญิงค่อนข้างมีอายุที่มีมารยาและเล่ห์เหลี่ยมมาก',
     },
     {
       no: 2,
-      ans: 'เป็ดปักกิ่ง',
+      answer: 'เป็ดปักกิ่ง',
       meaning:
         'อาหารจีนเลิศรสที่มีประวัติศาสตร์ยาวนาน และได้ชื่อว่าเป็นหนึ่งในเมนูประจำชาติจีน',
     },
     {
       no: 3,
-      ans: 'ยื่นแก้วให้วานร',
+      answer: 'ยื่นแก้วให้วานร',
       meaning: 'เอาของมีค่าให้แก่คนที่ไม่รู้จักค่าของสิ่งนั้น',
     },
     {
       no: 4,
-      ans: 'เห็ดหูหนู',
+      answer: 'เห็ดหูหนู',
       meaning:
         'เป็นเห็ดชนิดน้ำ แผ่นใสนิ่ม (Hood for hushroom) มีสารอาหาร มากมาย เช่น โปรตีน คาร์โบไฮเดรต ใยอาหาร แคลเซียม ฟอสฟอรัส วิตามิน B และ C สารพวกนี้จะช่วย บำรุงเลือด หัวใจ ป้องกันท้องผูก ริดสีดวงทวาร ช่วยลดน้ำตาลในเลือด',
     },
     {
       no: 5,
-      ans: 'สังข์ทอง',
+      answer: 'สังข์ทอง',
       meaning:
         'เดิมทีนั้นเป็นบทเล่นละครในมีมาแต่กรุงสุโขทัย ยังเป็นราชธานี ถึงกรุงรัตนโกสินทร์ ต่อมาในพระบาทสมเด็จพระพุทธเลิศหล้านภาลัยทรงตัด เรื่องสังข์ทองตอนปลาย (ตั้งแต่ตอนพระสังข์หนีนางพันธุรัต) มาทรงพระราชนิพนธ์ ให้ละครหลวงเล่น มีตัวละครที่เป็นรู้จักกันเป็นอย่างดี คือ เจ้าเงาะ ซึ่งคือพระสังข์ กับนางรจนา เนื้อเรื่องมีความสนุกสนานและเป็นที่นิยม',
     },
@@ -66,12 +66,12 @@ export async function POST(request: NextRequest) {
     return e.no === no;
   });
 
-  const isCorrect = answer === matchingItem?.ans;
+  const isCorrect = answer === matchingItem?.answer;
 
   return NextResponse.json(
     {
       isCorrect,
-      answer: isCorrect ? matchingItem?.ans : undefined,
+      answer: isCorrect ? matchingItem?.answer : undefined,
       meaning: isCorrect ? matchingItem.meaning : undefined,
     },
     {

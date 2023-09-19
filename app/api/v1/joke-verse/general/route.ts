@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
   const mockAnswers = [
     {
       no: 1,
-      ans: {
+      answer: {
         first: 'ทดสอบ',
         second: 'ทดสอบ',
         third: 'ทดสอบ',
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     },
     {
       no: 2,
-      ans: {
+      answer: {
         first: 'หมู',
         second: 'ไป',
         third: 'ไก่',
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     },
     {
       no: 3,
-      ans: {
+      answer: {
         first: 'น้ำตา',
         second: 'น้ำชา',
         third: 'น้ำยา',
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
     },
     {
       no: 4,
-      ans: {
+      answer: {
         first: 'แกว่ง',
         second: 'เท้า',
         third: 'หา',
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
     },
     {
       no: 5,
-      ans: {
+      answer: {
         first: 'จับ',
         second: 'ปลา',
         third: 'สอง',
@@ -85,12 +85,12 @@ export async function POST(request: NextRequest) {
   });
 
   const isCorrect = () => {
-    const ans = matchingItem?.ans;
+    const answer = matchingItem?.answer;
     return (
-      ans?.first === inputFirst &&
-      ans?.second === inputSecond &&
-      ans?.third === inputThird &&
-      ans?.fourth === inputFourth
+      answer?.first === inputFirst &&
+      answer?.second === inputSecond &&
+      answer?.third === inputThird &&
+      answer?.fourth === inputFourth
     );
   };
 

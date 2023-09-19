@@ -16,7 +16,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
 
   const question = questions[questionIndex] || {};
   const title = category === 'verse' ? 'กลอนปริศนา' : 'โจ๊กภาพปริศนา';
-  const url = `/categories/${category}/sub/${sub}`;
+  const url = `/api/v1/joke-${category}/${sub}`;
 
   const nextQuestion = () => {
     setQuestionIndex((prev) => (prev + 1) % questions.length);

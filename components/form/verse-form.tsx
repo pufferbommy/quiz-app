@@ -102,7 +102,7 @@ const VerseForm = ({ url, questionNo, nextQuestion, isLoadingImage, setIsLoading
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input disabled={isSubmitting} placeholder="ช่องใส่คำตอบ" {...field} />
+                    <Input placeholder="ช่องใส่คำตอบ" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

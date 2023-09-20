@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { imgSchema } from '../../../../../schemas/joke/img';
+import { imgSchema } from '../../../../../../schemas/joke/img';
 
 export async function GET() {
   const mockData = [
@@ -45,8 +45,7 @@ export async function POST(request: NextRequest) {
     {
       no: 2,
       answer: 'เป็ดปักกิ่ง',
-      meaning:
-        'อาหารจีนเลิศรสที่มีประวัติศาสตร์ยาวนาน และได้ชื่อว่าเป็นหนึ่งในเมนูประจำชาติจีน',
+      meaning: 'อาหารจีนเลิศรสที่มีประวัติศาสตร์ยาวนาน และได้ชื่อว่าเป็นหนึ่งในเมนูประจำชาติจีน',
     },
     {
       no: 3,
@@ -73,8 +72,7 @@ export async function POST(request: NextRequest) {
     {
       no: 7,
       answer: 'ผักชีโรยหน้า',
-      meaning:
-        'การทำความดีเพียงผิวเผิน ไม่ได้ทำดีอย่างจริงจังเป็นประจำ หรือสม่ำเสมอ',
+      meaning: 'การทำความดีเพียงผิวเผิน ไม่ได้ทำดีอย่างจริงจังเป็นประจำ หรือสม่ำเสมอ',
     },
     {
       no: 8,
@@ -95,7 +93,7 @@ export async function POST(request: NextRequest) {
     },
   ];
 
-  const matchingItem = answers.find((e) => {
+  const matchingItem = answers.find(e => {
     return e.no === no;
   });
 

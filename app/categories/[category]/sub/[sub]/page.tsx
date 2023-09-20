@@ -17,7 +17,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const [isLoadingImage, setIsLoadingImage] = useState(true);
 
   const title = category === 'verse' ? 'กลอนปริศนา' : 'โจ๊กภาพปริศนา';
-  const url = `/api/v1/joke-${category}/${sub}`;
+  const url = `/api/v1/jokes/${category}s/${sub}`;
   const question = questions[questionIndex] || null;
 
   const nextQuestion = () => {

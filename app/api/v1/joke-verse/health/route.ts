@@ -4,11 +4,11 @@ import { verseSchema } from '../../../../../schemas/joke/verse';
 
 export async function GET() {
   const mockData = [
-    { no: 1, imgPath: '' },
-    { no: 2, imgPath: '' },
-    { no: 3, imgPath: '' },
-    { no: 4, imgPath: '' },
-    { no: 5, imgPath: '' },
+    { no: 1, imgPath: '/images/verse/health/1.JPG' },
+    { no: 2, imgPath: '/images/verse/health/2.JPG' },
+    { no: 3, imgPath: '/images/verse/health/3.JPG' },
+    { no: 4, imgPath: '/images/verse/health/4.JPG' },
+    { no: 5, imgPath: '/images/verse/health/5.JPG' },
   ];
   return NextResponse.json({ mockData }, { status: 200 });
 }
@@ -32,10 +32,10 @@ export async function POST(request: NextRequest) {
   const { inputFirst, inputSecond, inputThird, inputFourth } = response.data;
 
   const mockAnswer = {
-    first: 'หมู',
-    second: 'หมา',
-    third: 'กา',
-    fourth: 'ไก่',
+    first: 'ทดสอบ',
+    second: 'ทดสอบ',
+    third: 'ทดสอบ',
+    fourth: 'ทดสอบ',
   };
 
   const isCorrect = () => {
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           message: true,
-          description: 'คำอธิบายโจ๊ก',
+          description: 'ยังไม่พร้อมใช้งาน',
         },
         {
           status: 200,

@@ -10,14 +10,14 @@ import ImageForm from '@/components/form/image-form';
 
 const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const { category, sub } = params;
-  const { questions, shuffleQuestions } = useQuestions(category, sub);
+  const url = `/api/v1/jokes/${category}s/${sub}`;
+  const { questions, shuffleQuestions } = useQuestions(url);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [isBreak, setIsBreak] = useState(false);
   const [totalRounds, setTotalRounds] = useState(1);
   const [isLoadingImage, setIsLoadingImage] = useState(true);
 
   const title = category === 'verse' ? 'กลอนปริศนา' : 'โจ๊กภาพปริศนา';
-  const url = `/api/v1/jokes/${category}s/${sub}`;
   const question = questions[questionIndex] || null;
 
   const nextQuestion = () => {

@@ -1,11 +1,11 @@
 import { Question } from '@/lib/types';
 import { useEffect, useState } from 'react';
 
-const useQuestions = (category: string, sub: string) => {
+const useQuestions = (url: string) => {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   const shuffleQuestions = () => {
-    setQuestions((questions) => {
+    setQuestions(questions => {
       const newQuestions = [...questions];
       for (let i = newQuestions.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -17,7 +17,6 @@ const useQuestions = (category: string, sub: string) => {
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      const url = `/api/v1/joke-${category}/${sub}`;
       const response = await fetch(url);
       const data = await response.json();
       const questions: Question[] = data.mockData;
@@ -25,7 +24,7 @@ const useQuestions = (category: string, sub: string) => {
       shuffleQuestions();
     };
     fetchQuestions();
-  }, [category, sub]);
+  }, [url]);
 
   return { questions, shuffleQuestions };
 };

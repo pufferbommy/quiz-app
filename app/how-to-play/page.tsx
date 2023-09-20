@@ -17,8 +17,7 @@ const HowToPlay = () => {
       <Title>วิธีการเล่น</Title>
       <ul className="space-y-4 mb-4">
         {instructions.map((instruction, index) => (
-          <li key={index}>
-            <span className="mr-2">{index + 1}.</span>
+          <li className="bg-secondary rounded-md p-4 text-start" key={index}>
             {instruction}
           </li>
         ))}

@@ -10,19 +10,19 @@ import ImageForm from '@/components/form/image-form';
 
 const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const { category, sub } = params;
-  const { questions, shuffleQuestions } = useQuestions(category, sub);
+  const url = `/api/v1/jokes/${category}s/${sub}`;
+  const { questions, shuffleQuestions } = useQuestions(url);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [isBreak, setIsBreak] = useState(false);
   const [totalRounds, setTotalRounds] = useState(1);
   const [isLoadingImage, setIsLoadingImage] = useState(true);
 
   const title = category === 'verse' ? 'กลอนปริศนา' : 'โจ๊กภาพปริศนา';
-  const url = `/api/v1/joke-${category}/${sub}`;
   const question = questions[questionIndex] || null;
 
   const nextQuestion = () => {
-    setTotalRounds((prev) => prev + 1);
-    setQuestionIndex((prev) => (prev + 1) % questions.length);
+    setTotalRounds(prev => prev + 1);
+    setQuestionIndex(prev => (prev + 1) % questions.length);
   };
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
             >
               กำลังโหลดรูป...
             </span>
-            {questions.map((q) => (
+            {questions.map(q => (
               <Fragment key={q.no + q.imgPath}>
                 {q.no === question.no && (
                   <Image
@@ -98,6 +98,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
           </div>
           {category === 'verse' ? (
             <VerseForm
+              isLoadingImage={isLoadingImage}
               setIsLoadingImage={setIsLoadingImage}
               questionNo={question?.no}
               url={url}
@@ -105,6 +106,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
             />
           ) : (
             <ImageForm
+              isLoadingImage={isLoadingImage}
               setIsLoadingImage={setIsLoadingImage}
               questionNo={question?.no}
               url={url}

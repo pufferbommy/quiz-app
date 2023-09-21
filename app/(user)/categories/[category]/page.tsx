@@ -22,19 +22,11 @@ const Category = ({ params }: { params: { category: string } }) => {
       <Title>โจ๊กปริศนา</Title>
       <div className="w-full flex flex-col gap-4">
         {subCategories.map(({ name, value }) => (
-          <>
-            {value === 'health' ? (
-              <Button key={name} disabled className="w-full" variant="outline">
-                {name}
-              </Button>
-            ) : (
-              <Link key={name} href={`/categories/${category}/sub/${value}`}>
-                <Button className="w-full" variant="outline">
-                  {name}
-                </Button>
-              </Link>
-            )}
-          </>
+          <Link key={name} href={`/categories/${category}/sub/${value}`}>
+            <Button className="w-full" variant="outline">
+              {name}
+            </Button>
+          </Link>
         ))}
         <Link href="/">
           <Button className="w-full" variant="outline">

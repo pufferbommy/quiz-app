@@ -11,22 +11,15 @@ const notoSansThai = Noto_Sans_Thai({
 
 export const metadata: Metadata = {
   title: 'โจ๊กปริศนา',
+  description: 'โจ๊กปริศนา',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={notoSansThai.className}>
       <body>
         <NextTopLoader />
-        <div className="px-4 h-full">
-          <main className="max-w-md relative mx-auto h-full flex justify-center items-center">
-            <div className="w-full">{children}</div>
-          </main>
-        </div>
+        <div className="px-4 h-full">{children}</div>
         <Toaster />
       </body>
     </html>

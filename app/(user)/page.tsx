@@ -27,9 +27,11 @@ const Page = () => {
           </Link>
         ))}
         <div className="grid grid-cols-2 gap-4">
-          <Button disabled variant="outline">
-            การตั้งค่า
-          </Button>
+          <Link href="/settings">
+            <Button className="w-full" variant="outline">
+              การตั้งค่า
+            </Button>
+          </Link>
           <Link href="/how-to-play">
             <Button className="w-full" variant="outline">
               วิธีการเล่น

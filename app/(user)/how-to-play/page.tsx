@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import { Button } from '@/components/ui/button';
 import Title from '@/components/text/title';
+import { Button } from '@/components/ui/button';
 
 const HowToPlay = () => {
   const instructions = [
@@ -23,7 +23,9 @@ const HowToPlay = () => {
         ))}
       </ul>
       <Link href="/">
-        <Button className="w-full">ย้อนกลับ</Button>
+        <Button variant="outline" className="w-full">
+          ย้อนกลับ
+        </Button>
       </Link>
     </>
   );

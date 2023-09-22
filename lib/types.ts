@@ -3,6 +3,10 @@ export interface StatusMessageResponse {
   message: string;
 }
 
+export interface StatusMessageDataResponse<T> extends StatusMessageResponse {
+  data: T;
+}
+
 export interface Question {
   imgPath: string;
   no: number;

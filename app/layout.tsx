@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import NextTopLoader from 'nextjs-toploader';
 import { Noto_Sans_Thai } from 'next/font/google';
+
 import { Toaster } from '@/components/ui/toaster';
 
 const notoSansThai = Noto_Sans_Thai({

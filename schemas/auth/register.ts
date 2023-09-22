@@ -2,9 +2,10 @@ import { z } from 'zod';
 
 export const registerSchema = z
   .object({
-    email: z.string().email('อีเมลไม่ถูกต้อง'),
-    password: z.string().min(1, 'รหัสผ่านต้องมีอย่างน้อย 1 ตัวอักษร'),
-    confirmPassword: z.string().min(1, 'รหัสผ่านต้องมีอย่างน้อย 1 ตัวอักษร'),
+    email: z.string().nonempty('กรุณากรอกอีเมล').email('อีเมลไม่ถูกต้อง'),
+    username: z.string().nonempty('กรุณากรอกชื่อผู้ใช้'),
+    password: z.string().nonempty('กรุณากรอกรหัสผ่าน'),
+    confirmPassword: z.string().nonempty('กรุณากรอกยืนยันรหัสผ่าน'),
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
     message: 'รหัสผ่านไม่ตรงกัน',

@@ -5,8 +5,8 @@ import { Fragment, useEffect, useState } from 'react';
 
 import useQuestions from '@/hooks/useQuestions';
 import { Button } from '@/components/ui/button';
-import VerseForm from '@/components/form/verse-form';
-import ImageForm from '@/components/form/image-form';
+import VerseForm from '@/components/form/VerseForm';
+import ImageForm from '@/components/form/ImageForm';
 
 const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const { category, sub } = params;

@@ -2,15 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { imgSchema } from '@/schemas/joke/img';
 
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
 export async function GET() {
-  const mockData = [
-    { no: 1, imgPath: '/images/image/health/1.jpg' },
-    { no: 2, imgPath: '/images/image/health/2.jpg' },
-    { no: 3, imgPath: '/images/image/health/3.jpg' },
-    { no: 4, imgPath: '/images/image/health/4.jpg' },
-    { no: 5, imgPath: '/images/image/health/5.jpg' },
-  ];
-  return NextResponse.json({ mockData }, { status: 200 });
+  const questions = await prisma.image_questions.findMany();
+
+  return NextResponse.json({ questions }, { status: 200 });
 }
 
 export async function POST(request: NextRequest) {
@@ -29,10 +28,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { answer } = response.data;
+  const question = await prisma.image_questions.findFirst({ where: { id: response.data.no } });
 
-  const mockAnswer = 'ทดสอบ';
-  const isCorrect = answer === mockAnswer;
+  const isCorrect = question?.answer === response.data.answer;
 
   return NextResponse.json(
     {

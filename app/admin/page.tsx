@@ -1,16 +1,14 @@
 'use client';
 
+import { Plus } from 'lucide-react';
+
+import { DataTable } from './data-table';
 import Title from '@/components/text/title';
 import { Question, columns } from './columns';
-import { DataTable } from './data-table';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import withAdminAuth from '@/components/wrapper/withAdminAuth';
 
 const Admin = () => {
-  const router = useRouter();
-
   const data: Question[] = [
     {
       id: 1,
@@ -124,28 +122,6 @@ const Admin = () => {
     },
   ];
 
-  useEffect(() => {
-    const userId = parseInt(localStorage.getItem('userId')!);
-    const roleId = parseInt(localStorage.getItem('roleId')!);
-    if (!userId || !roleId) {
-      router.push('/auth/login');
-    }
-    if (roleId !== 2) {
-      router.push('/');
-    }
-    // const username = localStorage.getItem('username');
-
-    // if (authCheck) {
-    //   fetch(`http://localhost:4000/users/${authCheck}`)
-    //     .then(res => res.json())
-    //     .then(data => {
-    //       if (data.username !== username || authCheck !== data._id) {
-    //         // Router.push('/sign-up');
-    //       }
-    //     });
-    // }
-  }, []);
-
   return (
     <>
       <Title>แอดมิน</Title>
@@ -178,4 +154,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default withAdminAuth(Admin);

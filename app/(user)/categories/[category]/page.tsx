@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import { Button } from '@/components/ui/button';
 import Title from '@/components/text/title';
+import { Button } from '@/components/ui/button';
 
 const Category = ({ params }: { params: { category: string } }) => {
   const { category } = params;

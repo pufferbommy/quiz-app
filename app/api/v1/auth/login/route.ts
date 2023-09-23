@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { loginSchema } from '@/schemas/auth/login';
 import { StatusMessageDataResponse, StatusMessageResponse } from '@/lib/types';
+import { ROLE } from '@/constants/role';
 
 export async function POST(req: NextRequest) {
   const request = await req.json();
@@ -28,13 +29,13 @@ export async function POST(req: NextRequest) {
       id: 1,
       email: 'testquiz@mail.com',
       password: '987654321',
-      roleId: 1,
+      roleId: ROLE.ADMIN,
     },
     {
       id: 2,
       email: 'admin@gmail.com',
       password: '123',
-      roleId: 2,
+      roleId: ROLE.ADMIN,
     },
   ];
 

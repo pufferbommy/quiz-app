@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Title from '@/components/text/title';
 import { Button } from '@/components/ui/button';
 
-const Page = () => {
+const User = () => {
   const categories = [
     {
       name: 'หมวดกลอน',
@@ -43,4 +43,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default User;

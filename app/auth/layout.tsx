@@ -1,3 +1,5 @@
+'use client';
+import withoutAuth from '@/components/wrapper/withoutAuth';
 import CenteredLayout from '@/layouts/CenteredLayout';
 
 interface Props {
@@ -8,4 +10,4 @@ const AuthLayout = ({ children }: Props) => {
   return <CenteredLayout>{children}</CenteredLayout>;
 };
 
-export default AuthLayout;
+export default withoutAuth(AuthLayout);

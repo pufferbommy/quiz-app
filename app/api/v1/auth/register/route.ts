@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { StatusMessageDataResponse, StatusMessageResponse } from '@/lib/types';
 import { registerSchema } from '@/schemas/auth/register';
+import { ROLE } from '@/constants/role';
 
 export async function POST(req: NextRequest) {
   const request = await req.json();
@@ -36,7 +37,7 @@ export async function POST(req: NextRequest) {
   // save user to database
   try {
     const userId = 3;
-    const roleId = 1;
+    const roleId = ROLE.USER;
     return NextResponse.json<StatusMessageDataResponse<{ userId: number; roleId: number }>>(
       {
         status: 'success',

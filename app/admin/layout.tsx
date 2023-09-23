@@ -1,3 +1,7 @@
+'use client';
+
+import withAdminAuth from '@/components/wrapper/withAdminAuth';
+
 interface Props {
   children: React.ReactNode;
 }
@@ -5,9 +9,9 @@ interface Props {
 const AdminLayout = ({ children }: Props) => {
   return (
     <div className="max-w-4xl relative py-4 mx-auto h-full">
-      <main className="w-full">{children}</main>
+      <main className="w-full h-full">{children}</main>
     </div>
   );
 };
 
-export default AdminLayout;
+export default withAdminAuth(AdminLayout);

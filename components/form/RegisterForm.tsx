@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
@@ -43,8 +44,13 @@ const RegisterForm = () => {
       variant: result.status === 'success' ? 'default' : 'destructive',
     });
     if (result.status === 'success') {
-      localStorage.setItem('userId', result.data.userId.toString());
-      localStorage.setItem('roleId', result.data.roleId.toString());
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          id: result.data.userId,
+          roleId: result.data.roleId,
+        })
+      );
       router.push('/');
     } else {
       form.reset();

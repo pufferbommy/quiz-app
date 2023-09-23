@@ -2,29 +2,19 @@ import Link from 'next/link';
 
 import Title from '@/components/text/title';
 import { Button } from '@/components/ui/button';
+import { subCategories } from '@/constants/sub-categories';
 
 const Category = ({ params }: { params: { category: string } }) => {
   const { category } = params;
-
-  const subCategories = [
-    {
-      name: 'หมวดสุขภาพ',
-      value: 'health',
-    },
-    {
-      name: 'หมวดทั่วไป',
-      value: 'general',
-    },
-  ];
 
   return (
     <>
       <Title>โจ๊กปริศนา</Title>
       <div className="w-full flex flex-col gap-4">
-        {subCategories.map(({ name, value }) => (
-          <Link key={name} href={`/categories/${category}/sub/${value}`}>
+        {subCategories.map(({ nameThai, nameEng }) => (
+          <Link key={nameEng} href={`/categories/${category}/sub/${nameEng}`}>
             <Button className="w-full" variant="outline">
-              {name}
+              {nameThai}
             </Button>
           </Link>
         ))}

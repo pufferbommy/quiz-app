@@ -11,6 +11,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { StatusMessageDataResponse } from '@/lib/types';
 import { LoginSchema, loginSchema } from '@/schemas/auth/login';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { ROLE } from '@/constants/role';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -49,7 +50,11 @@ const LoginForm = () => {
           roleId: result.data.roleId,
         })
       );
-      router.push('/');
+      if (result.data.roleId === ROLE.USER) {
+        router.push('/');
+      } else {
+        router.push('/admin');
+      }
     } else {
       form.reset();
       form.setValue('email', values.email);

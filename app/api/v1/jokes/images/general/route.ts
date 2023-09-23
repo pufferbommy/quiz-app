@@ -19,7 +19,7 @@ export async function GET() {
   //   { no: 9, imgPath: '/images/image/general/9.jpg' },
   //   { no: 10, imgPath: '/images/image/general/10.jpg' },
   // ];
-  const questions = prisma.image_questions.findMany();
+  const questions = await prisma.image_questions.findMany();
   return NextResponse.json({ questions }, { status: 200 });
 }
 

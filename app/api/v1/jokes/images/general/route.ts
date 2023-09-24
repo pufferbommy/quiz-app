@@ -8,6 +8,9 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   const questions = await prisma.image_questions.findMany({
+    where: {
+      group: 'general',
+    },
     select: {
       id: true,
       image_path: true,

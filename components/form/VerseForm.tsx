@@ -4,10 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { VerseAnswer } from '@/lib/types';
 import { useToast } from '../ui/use-toast';
 import { VerseSchema, verseSchema } from '../../schemas/joke/verse';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
-import { VerseAnswer } from '@/lib/types';
 
 interface Props {
   url: string;
@@ -36,15 +36,11 @@ const VerseForm = ({ url, questionId, nextQuestion, isLoadingImage, setIsLoading
     },
   });
 
-  const handleSkipQuestionClick = () => {
-    handleNextQuestionClick();
-  };
-
   const handleNextQuestionClick = () => {
     setIsLoadingImage(true);
-    nextQuestion();
     setResponse(null);
     form.reset();
+    nextQuestion();
   };
 
   const onSubmit = async (values: VerseSchema) => {
@@ -62,7 +58,12 @@ const VerseForm = ({ url, questionId, nextQuestion, isLoadingImage, setIsLoading
     if (data.isCorrect) {
       setResponse(data);
     } else {
-      handleNextQuestionClick();
+      form.reset();
+      form.setValue('questionId', values.questionId);
+      form.setValue('inputFirst', values.inputFirst);
+      form.setValue('inputSecond', values.inputSecond);
+      form.setValue('inputThird', values.inputThird);
+      form.setValue('inputFourth', values.inputFourth);
     }
     setIsSubmitting(false);
   };
@@ -133,7 +134,7 @@ const VerseForm = ({ url, questionId, nextQuestion, isLoadingImage, setIsLoading
             <div className="grid grid-cols-2 gap-4">
               <Button
                 disabled={isSubmitting || isLoadingImage}
-                onClick={handleSkipQuestionClick}
+                onClick={handleNextQuestionClick}
                 type="button"
                 variant="outline"
               >

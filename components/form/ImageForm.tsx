@@ -32,15 +32,11 @@ const ImageForm = ({ url, questionId, nextQuestion, isLoadingImage, setIsLoading
     },
   });
 
-  const handleSkipQuestionClick = () => {
-    handleNextQuestionClick();
-  };
-
   const handleNextQuestionClick = () => {
     setIsLoadingImage(true);
-    nextQuestion();
     setResponse(null);
     form.reset();
+    nextQuestion();
   };
 
   const onSubmit = async (values: ImgSchema) => {
@@ -58,7 +54,9 @@ const ImageForm = ({ url, questionId, nextQuestion, isLoadingImage, setIsLoading
     if (data.isCorrect) {
       setResponse(data);
     } else {
-      handleNextQuestionClick();
+      form.reset();
+      form.setValue('questionId', values.questionId);
+      form.setValue('answer', values.answer);
     }
     setIsSubmitting(false);
   };
@@ -90,7 +88,7 @@ const ImageForm = ({ url, questionId, nextQuestion, isLoadingImage, setIsLoading
             <div className="grid grid-cols-2 mt-4 gap-4">
               <Button
                 disabled={isSubmitting || isLoadingImage}
-                onClick={handleSkipQuestionClick}
+                onClick={handleNextQuestionClick}
                 type="button"
                 variant="outline"
               >

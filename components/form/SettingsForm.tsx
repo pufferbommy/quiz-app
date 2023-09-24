@@ -1,7 +1,7 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { StatusMessageDataResponse, UserData } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
 
 const SettingsForm = () => {
   const { toast } = useToast();
+  const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<UserSchema>({
@@ -49,7 +50,8 @@ const SettingsForm = () => {
     setIsSubmitting(false);
   };
 
-  const fetchCurrentUser = async () => {
+  const fetchCurrentUser = useCallback(async () => {
+    setIsLoadingUser(true);
     const user: UserData = JSON.parse(localStorage.getItem('user')!);
     const url = `/api/v1/users/${user.userId}`;
     const response = await fetch(url);
@@ -62,13 +64,14 @@ const SettingsForm = () => {
       return;
     }
     form.setValue('username', result.data.username);
-  };
+    setIsLoadingUser(false);
+  }, [form, toast]);
 
   useEffect(() => {
     (async () => {
       await fetchCurrentUser();
     })();
-  }, []);
+  }, [fetchCurrentUser]);
 
   return (
     <Form {...form}>
@@ -78,7 +81,7 @@ const SettingsForm = () => {
         className="flex flex-col gap-4"
       >
         <FormField
-          disabled={isSubmitting}
+          disabled={isSubmitting || isLoadingUser}
           control={form.control}
           name="username"
           render={({ field }) => (
@@ -90,7 +93,12 @@ const SettingsForm = () => {
             </FormItem>
           )}
         />
-        <Button isSubmitting={isSubmitting} variant="outline" disabled={isSubmitting} type="submit">
+        <Button
+          isSubmitting={isSubmitting}
+          variant="outline"
+          disabled={isSubmitting || isLoadingUser}
+          type="submit"
+        >
           เปลี่ยนชื่อผู้ใช้
         </Button>
       </form>

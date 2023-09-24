@@ -36,8 +36,8 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
     <>
       {isBreak ? (
         <>
-          <div className="relative rounded-full w-[75%] mb-8 mx-auto overflow-hidden aspect-square">
-            <Image src="/auth.jpg" alt="auth" fill />
+          <div className="relative w-[75%] translate-x-4 mb-8 mx-auto aspect-square">
+            <Image src="/logo.png" alt="" fill />
           </div>
           <div className="flex flex-col gap-3">
             <Button onClick={() => setIsBreak(false)}>เล่นต่อ</Button>

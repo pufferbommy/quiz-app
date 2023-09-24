@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ROLE } from '@/constants/role';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { StatusMessageDataResponse } from '@/lib/types';
+import { StatusMessageDataResponse, UserData } from '@/lib/types';
 import { useToast } from '@/components/ui/use-toast';
 import { RegisterSchema, registerSchema } from '@/schemas/auth/register';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
@@ -37,8 +37,7 @@ const RegisterForm = () => {
       },
       method: 'POST',
     });
-    const result: StatusMessageDataResponse<{ userId: number; roleId: number }> =
-      await response.json();
+    const result: StatusMessageDataResponse<UserData> = await response.json();
     toast({
       title: result.status,
       description: result.message,

@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { StatusMessageDataResponse } from '@/lib/types';
+import { StatusMessageDataResponse, UserData } from '@/lib/types';
 import { LoginSchema, loginSchema } from '@/schemas/auth/login';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { ROLE } from '@/constants/role';
@@ -35,8 +35,7 @@ const LoginForm = () => {
       },
       method: 'POST',
     });
-    const result: StatusMessageDataResponse<{ userId: number; roleId: number }> =
-      await response.json();
+    const result: StatusMessageDataResponse<UserData> = await response.json();
     toast({
       title: result.status,
       description: result.message,

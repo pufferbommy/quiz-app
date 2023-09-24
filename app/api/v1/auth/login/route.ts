@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { loginSchema } from '@/schemas/auth/login';
-import { StatusMessageDataResponse, StatusMessageResponse } from '@/lib/types';
+import { StatusMessageDataResponse, StatusMessageResponse, UserData } from '@/lib/types';
 
 const prisma = new PrismaClient();
 
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
   if (isMatch) {
     const userId = user.id;
     const roleId = user.role_id;
-    return NextResponse.json<StatusMessageDataResponse<{ userId: string; roleId: number }>>(
+    return NextResponse.json<StatusMessageDataResponse<UserData>>(
       {
         status: 'success',
         message: 'เข้าสู่ระบบสำเร็จ',

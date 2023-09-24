@@ -18,3 +18,8 @@ export interface VerseAnswer {
   third: string;
   fourth: string;
 }
+
+export interface UserData {
+  userId: string;
+  roleId: number;
+}

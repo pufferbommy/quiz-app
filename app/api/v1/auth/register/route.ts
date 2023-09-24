@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { ROLE } from '@/constants/role';
 import { registerSchema } from '@/schemas/auth/register';
-import { StatusMessageDataResponse, StatusMessageResponse } from '@/lib/types';
+import { StatusMessageDataResponse, StatusMessageResponse, UserData } from '@/lib/types';
 
 const prisma = new PrismaClient();
 
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
     const newUser = await prisma.users.create({ data: user });
     const userId = newUser.id;
     const roleId = newUser.role_id;
-    return NextResponse.json<StatusMessageDataResponse<{ userId: string; roleId: number }>>(
+    return NextResponse.json<StatusMessageDataResponse<UserData>>(
       {
         status: 'success',
         message: 'สมัครสมาชิกสำเร็จ',

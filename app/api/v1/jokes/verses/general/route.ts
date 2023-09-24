@@ -18,7 +18,7 @@ export async function GET() {
   //   { no: 9, imgPath: '/images/verse/general/09.JPG' },
   //   { no: 10, imgPath: '/images/verse/general/10.JPG' },
   // ];
-  const questions = await prisma.verse_questions.findMany();
+  const questions = await prisma.verse_questions.findMany({ where: { group: 'health' } });
   return NextResponse.json({ questions }, { status: 200 });
 }
 

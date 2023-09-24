@@ -7,15 +7,15 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function GET() {
-  const mockData = [
-    { no: 1, imgPath: '/images/verse/health/1.JPG' },
-    { no: 2, imgPath: '/images/verse/health/2.JPG' },
-    { no: 3, imgPath: '/images/verse/health/3.JPG' },
-    { no: 4, imgPath: '/images/verse/health/4.JPG' },
-    { no: 5, imgPath: '/images/verse/health/5.JPG' },
-  ];
-
-  return NextResponse.json({ mockData }, { status: 200 });
+  // const mockData = [
+  //   { no: 1, imgPath: '/images/verse/health/1.JPG' },
+  //   { no: 2, imgPath: '/images/verse/health/2.JPG' },
+  //   { no: 3, imgPath: '/images/verse/health/3.JPG' },
+  //   { no: 4, imgPath: '/images/verse/health/4.JPG' },
+  //   { no: 5, imgPath: '/images/verse/health/5.JPG' },
+  // ];
+  const questions = await prisma.verse_questions.findMany({ where: { group: 'health' } });
+  return NextResponse.json({ questions }, { status: 200 });
 }
 
 export async function POST(request: NextRequest) {

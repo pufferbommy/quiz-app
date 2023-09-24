@@ -26,7 +26,7 @@ model verse_questions {
   id         Int      @id @default(autoincrement())
   image_path String
   answer     String
-  meaning    String
+  meaning    String   @db.Text
   create_at  DateTime @default(now())
 }
 
@@ -34,6 +34,6 @@ model image_questions {
   id         Int      @id @default(autoincrement())
   image_path String
   answer     String
-  meaning    String
+  meaning    String   @db.Text
   create_at  DateTime @default(now())
 }

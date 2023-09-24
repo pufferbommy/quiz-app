@@ -8,6 +8,6 @@ export interface StatusMessageDataResponse<T> extends StatusMessageResponse {
 }
 
 export interface Question {
-  imgPath: string;
-  no: number;
+  id: number;
+  imagePath: string;
 }

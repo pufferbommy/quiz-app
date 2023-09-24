@@ -1,8 +1,7 @@
 import { z } from 'zod';
 
 export const imgSchema = z.object({
-  group: z.string(),
-  no: z.number(),
+  questionId: z.number(),
   answer: z.string(),
 });
 

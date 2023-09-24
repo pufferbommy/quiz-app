@@ -10,13 +10,13 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
 
 interface Props {
   url: string;
-  questionNo: number | undefined;
+  questionId: number | undefined;
   nextQuestion: () => void;
   isLoadingImage: boolean;
   setIsLoadingImage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ImageForm = ({ url, questionNo, nextQuestion, isLoadingImage, setIsLoadingImage }: Props) => {
+const ImageForm = ({ url, questionId, nextQuestion, isLoadingImage, setIsLoadingImage }: Props) => {
   const { toast } = useToast();
   const [response, setResponse] = useState<{
     isCorrect: boolean;
@@ -29,7 +29,6 @@ const ImageForm = ({ url, questionNo, nextQuestion, isLoadingImage, setIsLoading
     resolver: zodResolver(imgSchema),
     defaultValues: {
       answer: '',
-      group: 'image',
     },
   });
 
@@ -65,10 +64,10 @@ const ImageForm = ({ url, questionNo, nextQuestion, isLoadingImage, setIsLoading
   };
 
   useEffect(() => {
-    if (questionNo) {
-      form.setValue('no', questionNo);
+    if (questionId) {
+      form.setValue('questionId', questionId);
     }
-  }, [questionNo, form]);
+  }, [questionId, form]);
 
   return (
     <>

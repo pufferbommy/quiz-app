@@ -77,16 +77,16 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
               กำลังโหลดรูป...
             </span>
             {questions.map(q => (
-              <Fragment key={q.no + q.imgPath}>
-                {q.no === question.no && (
+              <Fragment key={q.id}>
+                {q.id === question.id && (
                   <Image
-                    key={q.imgPath}
+                    key={q.imagePath}
                     className={`transition-opacity duration-500 ${
                       isLoadingImage ? 'opacity-0' : 'opacity-100'
                     }`}
                     priority
                     quality={75}
-                    src={q.imgPath}
+                    src={q.imagePath}
                     onLoadingComplete={() => {
                       setIsLoadingImage(false);
                     }}
@@ -109,7 +109,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
             <ImageForm
               isLoadingImage={isLoadingImage}
               setIsLoadingImage={setIsLoadingImage}
-              questionNo={question?.no}
+              questionId={question?.id}
               url={url}
               nextQuestion={nextQuestion}
             />

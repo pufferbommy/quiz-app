@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const verseSchema = z.object({
-  no: z.number(),
+  questionId: z.number(),
   inputFirst: z.string(),
   inputSecond: z.string(),
   inputThird: z.string(),

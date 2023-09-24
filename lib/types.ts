@@ -11,3 +11,10 @@ export interface Question {
   id: number;
   imagePath: string;
 }
+
+export interface VerseAnswer {
+  first: string;
+  second: string;
+  third: string;
+  fourth: string;
+}

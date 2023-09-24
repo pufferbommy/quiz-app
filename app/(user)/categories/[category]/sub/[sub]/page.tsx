@@ -101,7 +101,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
             <VerseForm
               isLoadingImage={isLoadingImage}
               setIsLoadingImage={setIsLoadingImage}
-              questionNo={question?.no}
+              questionId={question?.id}
               url={url}
               nextQuestion={nextQuestion}
             />

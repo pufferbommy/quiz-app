@@ -7,25 +7,21 @@ import { Button } from '../ui/button';
 import { useToast } from '../ui/use-toast';
 import { VerseSchema, verseSchema } from '../../schemas/joke/verse';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
+import { VerseAnswer } from '@/lib/types';
 
 interface Props {
   url: string;
-  questionNo: number | undefined;
+  questionId: number | undefined;
   nextQuestion: () => void;
   isLoadingImage: boolean;
   setIsLoadingImage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const VerseForm = ({ url, questionNo, nextQuestion, isLoadingImage, setIsLoadingImage }: Props) => {
+const VerseForm = ({ url, questionId, nextQuestion, isLoadingImage, setIsLoadingImage }: Props) => {
   const { toast } = useToast();
   const [response, setResponse] = useState<{
     isCorrect: boolean;
-    answer?: {
-      first: string;
-      second: string;
-      third: string;
-      fourth: string;
-    };
+    answer?: VerseAnswer;
     meaning?: string;
   } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -72,10 +68,10 @@ const VerseForm = ({ url, questionNo, nextQuestion, isLoadingImage, setIsLoading
   };
 
   useEffect(() => {
-    if (questionNo) {
-      form.setValue('no', questionNo);
+    if (questionId) {
+      form.setValue('questionId', questionId);
     }
-  }, [questionNo, form]);
+  }, [questionId, form]);
 
   return (
     <>

@@ -3,6 +3,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { StatusMessageDataResponse, StatusMessageResponse } from '@/lib/types';
 import { registerSchema } from '@/schemas/auth/register';
 import { ROLE } from '@/constants/role';
+import bcrypt from 'bcrypt';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
   const request = await req.json();
@@ -24,21 +28,28 @@ export async function POST(req: NextRequest) {
   const { email, username, password } = parsedRequest.data;
 
   // check email is already exists
+  const isDuplicate = await prisma.users.findUnique({ where: { email: email } });
+  if (isDuplicate)
+    return NextResponse.json({ message: 'อีเมลนี้มีผู้ใช้งานแล้ว' }, { status: 400 });
 
   // hash password
-  const hashedPassword = password;
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(password, salt);
 
   const user = {
     email,
     username,
-    password: hashedPassword,
+    password: hash,
+    role_id: ROLE.USER,
   };
 
   // save user to database
+
   try {
-    const userId = 3;
-    const roleId = ROLE.USER;
-    return NextResponse.json<StatusMessageDataResponse<{ userId: number; roleId: number }>>(
+    const newUser = await prisma.users.create({ data: user });
+    const userId = newUser.id;
+    const roleId = newUser.role_id;
+    return NextResponse.json<StatusMessageDataResponse<{ userId: string; roleId: number }>>(
       {
         status: 'success',
         message: 'สมัครสมาชิกสำเร็จ',

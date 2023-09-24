@@ -213,6 +213,23 @@ async function main() {
       update: data,
     });
   }
+  const roles = [
+    {
+      id: 1,
+      role_name: 'user',
+    },
+    {
+      id: 2,
+      role_name: 'admin',
+    },
+  ];
+  for (const data of roles) {
+    await prisma.role.upsert({
+      where: { id: data.id },
+      create: data,
+      update: data,
+    });
+  }
 }
 main()
   .then(async () => {

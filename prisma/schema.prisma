@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,8 +12,10 @@ model users {
   username String
   email    String @unique
   password String
-  role     role   @relation(fields: [role_id], references: [id])
   role_id  Int
+  role     role   @relation(fields: [role_id], references: [id])
+
+  @@index([role_id], map: "users_role_id_fkey")
 }
 
 model role {
@@ -30,8 +29,8 @@ model verse_questions {
   image_path String
   answer     String
   meaning    String   @db.Text
-  group      String
   create_at  DateTime @default(now())
+  group      String
 }
 
 model image_questions {
@@ -39,6 +38,6 @@ model image_questions {
   image_path String
   answer     String
   meaning    String   @db.Text
-  group      String
   create_at  DateTime @default(now())
+  group      String
 }

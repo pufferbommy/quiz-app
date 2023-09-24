@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
-import { StatusMessageDataResponse } from '@/lib/types';
+import { StatusMessageDataResponse, UserData } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Input } from '../ui/input';
@@ -25,8 +25,8 @@ const SettingsForm = () => {
 
   const onSubmit = async (values: UserSchema) => {
     setIsSubmitting(true);
-    const user: { id: string; roleId: number } = JSON.parse(localStorage.getItem('user')!);
-    const url = `/api/v1/users/${user.id}`;
+    const user: UserData = JSON.parse(localStorage.getItem('user')!);
+    const url = `/api/v1/users/${user.userId}`;
     const response = await fetch(url, {
       body: JSON.stringify(values),
       headers: {
@@ -50,8 +50,8 @@ const SettingsForm = () => {
   };
 
   const fetchCurrentUser = async () => {
-    const user: { id: string; roleId: number } = JSON.parse(localStorage.getItem('user')!);
-    const url = `/api/v1/users/${user.id}`;
+    const user: UserData = JSON.parse(localStorage.getItem('user')!);
+    const url = `/api/v1/users/${user.userId}`;
     const response = await fetch(url);
     const result: StatusMessageDataResponse<{ username: string }> = await response.json();
     if (result.status === 'error') {

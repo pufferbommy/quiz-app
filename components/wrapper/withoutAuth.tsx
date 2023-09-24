@@ -1,6 +1,7 @@
 'use client';
 
 import { ROLE } from '@/constants/role';
+import { UserData } from '@/lib/types';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -16,9 +17,9 @@ const withoutAuth = (WrappedComponent: React.ComponentType<any>) => {
       const user = localStorage.getItem('user');
 
       if (user) {
-        const parsedUser: { id: number; roleId: number } = JSON.parse(user);
+        const parsedUser: UserData = JSON.parse(user);
 
-        if (parsedUser.id && parsedUser.roleId) {
+        if (parsedUser.userId && parsedUser.roleId) {
           if (parsedUser.roleId === ROLE.ADMIN) {
             router.replace('/admin');
             return;

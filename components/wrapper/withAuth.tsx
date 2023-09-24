@@ -1,5 +1,6 @@
 'use client';
 
+import { UserData } from '@/lib/types';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -19,9 +20,9 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
         return;
       }
 
-      const parsedUser: { id: number; roleId: number } = JSON.parse(user);
+      const parsedUser: UserData = JSON.parse(user);
 
-      if (!parsedUser.id || !parsedUser.roleId) {
+      if (!parsedUser.userId || !parsedUser.roleId) {
         router.push('/auth/login');
         return;
       }

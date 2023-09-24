@@ -44,13 +44,7 @@ const RegisterForm = () => {
       variant: result.status === 'success' ? 'default' : 'destructive',
     });
     if (result.status === 'success') {
-      localStorage.setItem(
-        'user',
-        JSON.stringify({
-          id: result.data.userId,
-          roleId: result.data.roleId,
-        })
-      );
+      localStorage.setItem('user', JSON.stringify(result.data));
       if (result.data.roleId === ROLE.USER) {
         router.push('/');
       } else {

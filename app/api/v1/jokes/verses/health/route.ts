@@ -1,32 +1,40 @@
+import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { verseSchema } from '@/schemas/joke/verse';
-
-import { PrismaClient } from '@prisma/client';
+import { Question, StatusMessageDataResponse, VerseAnswer } from '@/lib/types';
 
 const prisma = new PrismaClient();
 
 export async function GET() {
-  // const mockData = [
-  //   { no: 1, imgPath: '/images/verse/health/1.JPG' },
-  //   { no: 2, imgPath: '/images/verse/health/2.JPG' },
-  //   { no: 3, imgPath: '/images/verse/health/3.JPG' },
-  //   { no: 4, imgPath: '/images/verse/health/4.JPG' },
-  //   { no: 5, imgPath: '/images/verse/health/5.JPG' },
-  // ];
-  const questions = await prisma.verse_questions.findMany({ where: { group: 'health' } });
-  return NextResponse.json({ questions }, { status: 200 });
+  const questions = await prisma.verse_questions.findMany({
+    where: { group: 'health' },
+    select: { id: true, image_path: true },
+  });
+  return NextResponse.json<StatusMessageDataResponse<{ questions: Question[] }>>(
+    {
+      status: 'success',
+      message: 'Get all questions successfully',
+      data: {
+        questions: questions.map(({ id, image_path }) => ({
+          id,
+          imagePath: image_path,
+        })),
+      },
+    },
+    { status: 200 }
+  );
 }
 
 export async function POST(request: NextRequest) {
   const json = await request.json();
 
-  const response = verseSchema.safeParse(json);
+  const parsed = verseSchema.safeParse(json);
 
-  if (!response.success) {
+  if (!parsed.success) {
     return NextResponse.json(
       {
-        error: { message: response.error },
+        error: { message: parsed.error },
       },
       {
         status: 400,
@@ -34,57 +42,33 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { inputFirst, inputSecond, inputThird, inputFourth } = response.data;
+  const { questionId, inputFirst, inputSecond, inputThird, inputFourth } = parsed.data;
 
-  const mockAnswer = {
-    first: 'ทดสอบ',
-    second: 'ทดสอบ',
-    third: 'ทดสอบ',
-    fourth: 'ทดสอบ',
-  };
+  const question = await prisma.verse_questions.findUnique({ where: { id: questionId } });
+
+  if (question === null) {
+    return NextResponse.json({ message: 'ไม่พบข้อที่คุณต้องการตรวจสอบ' }, { status: 404 });
+  }
+
+  const answer: VerseAnswer = JSON.parse(question.answer);
 
   const isCorrect = () => {
-    const isEmptyAnswer =
-      inputFirst == '' || inputSecond === '' || inputThird === '' || inputFourth === '';
-
-    const isCorrectAnswer =
-      inputFirst === mockAnswer.first &&
-      inputSecond === mockAnswer.second &&
-      inputThird === mockAnswer.third &&
-      inputFourth === mockAnswer.fourth;
-
-    if (isEmptyAnswer) {
-      return NextResponse.json(
-        {
-          message: 'Not found your answer',
-        },
-        {
-          status: 404,
-        }
-      );
-    }
-
-    if (isCorrectAnswer) {
-      return NextResponse.json(
-        {
-          message: true,
-          description: 'ยังไม่พร้อมใช้งาน',
-        },
-        {
-          status: 200,
-        }
-      );
-    } else {
-      return NextResponse.json(
-        {
-          message: false,
-        },
-        {
-          status: 200,
-        }
-      );
-    }
+    return (
+      inputFirst === answer.first &&
+      inputSecond === answer.second &&
+      inputThird === answer.third &&
+      inputFourth === answer.fourth
+    );
   };
 
-  return isCorrect();
+  return NextResponse.json(
+    {
+      isCorrect: isCorrect(),
+      answer: isCorrect() ? answer : undefined,
+      meaning: isCorrect() ? question.meaning : undefined,
+    },
+    {
+      status: 200,
+    }
+  );
 }

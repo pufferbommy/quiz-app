@@ -34,12 +34,12 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   const json = await request.json();
 
-  const parsedRequest = imgSchema.safeParse(json);
+  const parsed = imgSchema.safeParse(json);
 
-  if (!parsedRequest.success) {
+  if (!parsed.success) {
     return NextResponse.json(
       {
-        error: { message: parsedRequest.error },
+        error: { message: parsed.error },
       },
       {
         status: 400,
@@ -47,9 +47,13 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { questionId, answer } = parsedRequest.data;
+  const { questionId, answer } = parsed.data;
 
-  const question = await prisma.image_questions.findFirst({ where: { id: questionId } });
+  const question = await prisma.image_questions.findUnique({ where: { id: questionId } });
+
+  if (question === null) {
+    return NextResponse.json({ message: 'ไม่พบข้อที่คุณต้องการตรวจสอบ' }, { status: 404 });
+  }
 
   const isCorrect = answer === question?.answer;
 

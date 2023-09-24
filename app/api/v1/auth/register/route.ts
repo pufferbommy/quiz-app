@@ -9,15 +9,15 @@ import { StatusMessageDataResponse, StatusMessageResponse, UserData } from '@/li
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-  const request = await req.json();
+  const json = await req.json();
 
-  const parsedRequest = registerSchema.safeParse(request);
+  const parsed = registerSchema.safeParse(json);
 
-  if (!parsedRequest.success) {
+  if (!parsed.success) {
     return NextResponse.json<StatusMessageResponse>(
       {
         status: 'error',
-        message: parsedRequest.error.message,
+        message: parsed.error.message,
       },
       {
         status: 400,
@@ -25,10 +25,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { email, username, password } = parsedRequest.data;
+  const { email, username, password } = parsed.data;
 
-  const isDuplicate = await prisma.users.findUnique({ where: { email: email } });
-  if (isDuplicate) {
+  const isEmailExist = await prisma.users.findUnique({ where: { email: email } });
+
+  if (isEmailExist) {
     return NextResponse.json<StatusMessageResponse>(
       { status: 'error', message: 'อีเมลนี้มีผู้ใช้งานแล้ว' },
       { status: 400 }
@@ -48,15 +49,13 @@ export async function POST(req: NextRequest) {
 
   try {
     const newUser = await prisma.users.create({ data: user });
-    const userId = newUser.id;
-    const roleId = newUser.role_id;
     return NextResponse.json<StatusMessageDataResponse<UserData>>(
       {
         status: 'success',
         message: 'สมัครสมาชิกสำเร็จ',
         data: {
-          userId,
-          roleId,
+          userId: newUser.id,
+          roleId: newUser.role_id,
         },
       },
       {

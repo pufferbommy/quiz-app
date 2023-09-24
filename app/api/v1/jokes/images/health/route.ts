@@ -1,9 +1,7 @@
+import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { imgSchema } from '@/schemas/joke/img';
-
-import { PrismaClient } from '@prisma/client';
-
 import { Question, StatusMessageDataResponse } from '@/lib/types';
 
 const prisma = new PrismaClient();
@@ -32,12 +30,12 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   const json = await request.json();
 
-  const response = imgSchema.safeParse(json);
+  const parsed = imgSchema.safeParse(json);
 
-  if (!response.success) {
+  if (!parsed.success) {
     return NextResponse.json(
       {
-        error: { message: response.error },
+        error: { message: parsed.error },
       },
       {
         status: 400,
@@ -45,11 +43,17 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const question = await prisma.image_questions.findFirst({
-    where: { id: response.data.questionId },
+  const { questionId } = parsed.data;
+
+  const question = await prisma.image_questions.findUnique({
+    where: { id: questionId },
   });
 
-  const isCorrect = question?.answer === response.data.answer;
+  if (question === null) {
+    return NextResponse.json({ message: 'ไม่พบข้อที่คุณต้องการตรวจสอบ' }, { status: 404 });
+  }
+
+  const isCorrect = question?.answer === parsed.data.answer;
 
   return NextResponse.json(
     {

@@ -8,15 +8,15 @@ import { StatusMessageDataResponse, StatusMessageResponse, UserData } from '@/li
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-  const request = await req.json();
+  const json = await req.json();
 
-  const parsedRequest = loginSchema.safeParse(request);
+  const parsed = loginSchema.safeParse(json);
 
-  if (!parsedRequest.success) {
+  if (!parsed.success) {
     return NextResponse.json<StatusMessageResponse>(
       {
         status: 'error',
-        message: parsedRequest.error.message,
+        message: parsed.error.message,
       },
       {
         status: 400,
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { email, password } = parsedRequest.data;
+  const { email, password } = parsed.data;
 
   const user = await prisma.users.findUnique({ where: { email: email } });
 
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json<StatusMessageResponse>(
       {
         status: 'error',
-        message: 'อีเมลหรือรหัสผ่านไม่ถูกต้อง',
+        message: 'ไม่พบอีเมลนี้ในระบบ',
       },
       {
         status: 401,

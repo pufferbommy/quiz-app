@@ -83,6 +83,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
                     className={`transition-opacity duration-500 ${
                       isLoadingImage ? 'opacity-0' : 'opacity-100'
                     }`}
+                    sizes="100%"
                     priority
                     quality={75}
                     src={q.imagePath}

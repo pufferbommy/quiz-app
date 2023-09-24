@@ -1,7 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-
+import Logo from '@/components/logo';
 import CenteredLayout from '@/layouts/CenteredLayout';
 import withoutAuth from '@/components/wrapper/withoutAuth';
 
@@ -12,9 +11,7 @@ interface Props {
 const AuthLayout = ({ children }: Props) => {
   return (
     <CenteredLayout>
-      <div className="relative w-[50%] translate-x-4 mb-8 mx-auto aspect-square">
-        <Image src="/logo.png" alt="" fill />
-      </div>
+      <Logo />
       {children}
     </CenteredLayout>
   );

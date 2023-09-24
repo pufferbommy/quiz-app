@@ -1,16 +1,14 @@
 import Link from 'next/link';
 
+import Logo from '@/components/logo';
 import Title from '@/components/text/title';
 import { Button } from '@/components/ui/button';
 import { categories } from '@/constants/categories';
-import Image from 'next/image';
 
 const User = () => {
   return (
     <>
-      <div className="relative w-[50%] translate-x-4 mb-8 mx-auto aspect-square">
-        <Image src="/logo.png" alt="" fill />
-      </div>
+      <Logo />
       <Title>โจ๊กปริศนา</Title>
       <div className="flex flex-col gap-4">
         {categories.map(({ nameThai, nameEng }) => (

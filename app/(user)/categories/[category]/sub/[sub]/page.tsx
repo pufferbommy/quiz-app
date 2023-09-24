@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Fragment, useEffect, useState } from 'react';
 
+import Logo from '@/components/logo';
 import useQuestions from '@/hooks/useQuestions';
 import { Button } from '@/components/ui/button';
 import VerseForm from '@/components/form/VerseForm';
@@ -36,9 +37,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
     <>
       {isBreak ? (
         <>
-          <div className="relative w-[75%] translate-x-4 mb-8 mx-auto aspect-square">
-            <Image src="/logo.png" alt="" fill />
-          </div>
+          <Logo />
           <div className="flex flex-col gap-3">
             <Button onClick={() => setIsBreak(false)}>เล่นต่อ</Button>
             <Link href="/">

@@ -4,12 +4,29 @@ import { imgSchema } from '@/schemas/joke/img';
 
 import { PrismaClient } from '@prisma/client';
 
+import { Question, StatusMessageDataResponse } from '@/lib/types';
+
 const prisma = new PrismaClient();
 
 export async function GET() {
-  const questions = await prisma.image_questions.findMany();
+  const questions = await prisma.image_questions.findMany({
+    where: { group: 'health' },
+    select: { id: true, image_path: true },
+  });
 
-  return NextResponse.json({ questions }, { status: 200 });
+  return NextResponse.json<StatusMessageDataResponse<{ questions: Question[] }>>(
+    {
+      status: 'success',
+      message: 'Get all questions successfully',
+      data: {
+        questions: questions.map(({ id, image_path }) => ({
+          id,
+          imagePath: image_path,
+        })),
+      },
+    },
+    { status: 200 }
+  );
 }
 
 export async function POST(request: NextRequest) {
@@ -28,7 +45,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const question = await prisma.image_questions.findFirst({ where: { id: response.data.no } });
+  const question = await prisma.image_questions.findFirst({
+    where: { id: response.data.questionId },
+  });
 
   const isCorrect = question?.answer === response.data.answer;
 

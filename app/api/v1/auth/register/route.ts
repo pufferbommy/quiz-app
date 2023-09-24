@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
-
-import { StatusMessageDataResponse, StatusMessageResponse } from '@/lib/types';
-import { registerSchema } from '@/schemas/auth/register';
-import { ROLE } from '@/constants/role';
 import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
+import { NextRequest, NextResponse } from 'next/server';
+
+import { ROLE } from '@/constants/role';
+import { registerSchema } from '@/schemas/auth/register';
+import { StatusMessageDataResponse, StatusMessageResponse } from '@/lib/types';
 
 const prisma = new PrismaClient();
 
@@ -27,23 +27,23 @@ export async function POST(req: NextRequest) {
 
   const { email, username, password } = parsedRequest.data;
 
-  // check email is already exists
   const isDuplicate = await prisma.users.findUnique({ where: { email: email } });
-  if (isDuplicate)
-    return NextResponse.json({ message: 'อีเมลนี้มีผู้ใช้งานแล้ว' }, { status: 400 });
+  if (isDuplicate) {
+    return NextResponse.json<StatusMessageResponse>(
+      { status: 'error', message: 'อีเมลนี้มีผู้ใช้งานแล้ว' },
+      { status: 400 }
+    );
+  }
 
-  // hash password
   const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(password, salt);
+  const hashedPassword = bcrypt.hashSync(password, salt);
 
   const user = {
     email,
     username,
-    password: hash,
+    password: hashedPassword,
     role_id: ROLE.USER,
   };
-
-  // save user to database
 
   try {
     const newUser = await prisma.users.create({ data: user });

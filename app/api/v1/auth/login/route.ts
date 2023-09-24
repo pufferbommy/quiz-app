@@ -1,9 +1,9 @@
+import bcrypt from 'bcrypt';
+import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { loginSchema } from '@/schemas/auth/login';
 import { StatusMessageDataResponse, StatusMessageResponse } from '@/lib/types';
-import bcrypt from 'bcrypt';
-import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -40,7 +40,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // compare password
   const isMatch = bcrypt.compareSync(password, user.password);
 
   if (isMatch) {

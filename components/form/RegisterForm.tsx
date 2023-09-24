@@ -5,13 +5,13 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { ROLE } from '@/constants/role';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { StatusMessageDataResponse } from '@/lib/types';
 import { useToast } from '@/components/ui/use-toast';
 import { RegisterSchema, registerSchema } from '@/schemas/auth/register';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { ROLE } from '@/constants/role';
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -60,7 +60,9 @@ const RegisterForm = () => {
     } else {
       form.reset();
       form.setValue('email', values.email);
+      form.setValue('username', values.username);
       form.setValue('password', values.password);
+      form.setValue('confirmPassword', values.confirmPassword);
     }
     setIsSubmitting(false);
   };

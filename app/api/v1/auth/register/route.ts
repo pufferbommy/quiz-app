@@ -35,7 +35,8 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const salt = bcrypt.genSaltSync(10);
+  const saltRounds = 10;
+  const salt = bcrypt.genSaltSync(saltRounds);
   const hashedPassword = bcrypt.hashSync(password, salt);
 
   const user = {

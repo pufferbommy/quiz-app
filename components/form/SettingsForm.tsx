@@ -66,8 +66,8 @@ const SettingsForm = () => {
             </FormItem>
           )}
         />
-        <Button variant="outline" disabled={isSubmitting} type="submit">
-          {!isSubmitting ? 'เปลี่ยนชื่อผู้ใช้' : 'กำลังเปลี่ยนชื่อผู้ใช้...'}
+        <Button isSubmitting={isSubmitting} variant="outline" disabled={isSubmitting} type="submit">
+          เปลี่ยนชื่อผู้ใช้
         </Button>
       </form>
     </Form>

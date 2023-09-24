@@ -95,8 +95,8 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
-        <Button disabled={isSubmitting} type="submit">
-          {!isSubmitting ? 'ล็อกอิน' : 'กำลังล็อกอิน...'}
+        <Button isSubmitting={isSubmitting} disabled={isSubmitting} type="submit">
+          ล็อกอิน
         </Button>
       </form>
     </Form>

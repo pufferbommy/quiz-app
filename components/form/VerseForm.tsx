@@ -139,8 +139,12 @@ const VerseForm = ({ url, questionId, nextQuestion, isLoadingImage, setIsLoading
               >
                 ข้าม
               </Button>
-              <Button disabled={isSubmitting || isLoadingImage} type="submit">
-                {!isSubmitting ? 'ส่ง' : 'กำลังส่ง...'}
+              <Button
+                isSubmitting={isSubmitting}
+                disabled={isSubmitting || isLoadingImage}
+                type="submit"
+              >
+                ส่ง
               </Button>
             </div>
           </form>

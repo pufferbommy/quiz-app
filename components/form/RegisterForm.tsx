@@ -125,8 +125,8 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button disabled={isSubmitting} type="submit">
-          {!isSubmitting ? 'สมัคร' : 'กำลังสมัคร...'}
+        <Button isSubmitting={isSubmitting} disabled={isSubmitting} type="submit">
+          สมัคร
         </Button>
       </form>
     </Form>

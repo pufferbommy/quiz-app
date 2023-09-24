@@ -35,13 +35,13 @@ const SettingsForm = () => {
       },
       method: 'POST',
     });
-    const data: StatusMessageResponse = await response.json();
+    const result: StatusMessageResponse = await response.json();
     toast({
-      title: data.status,
-      description: data.message,
-      variant: data.status === 'success' ? 'default' : 'destructive',
+      title: result.status,
+      description: result.message,
+      variant: result.status === 'success' ? 'default' : 'destructive',
     });
-    if (data.status === 'error') {
+    if (result.status === 'error') {
       form.reset();
       form.setValue('username', values.username);
     } else {

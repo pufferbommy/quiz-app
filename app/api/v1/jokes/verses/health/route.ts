@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { verseSchema } from '@/schemas/joke/verse';
 
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
 export async function GET() {
   const mockData = [
     { no: 1, imgPath: '/images/verse/health/1.JPG' },
@@ -10,6 +14,7 @@ export async function GET() {
     { no: 4, imgPath: '/images/verse/health/4.JPG' },
     { no: 5, imgPath: '/images/verse/health/5.JPG' },
   ];
+
   return NextResponse.json({ mockData }, { status: 200 });
 }
 

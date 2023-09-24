@@ -1,5 +1,6 @@
-import { Question, StatusMessageDataResponse } from '@/lib/types';
 import { useEffect, useState } from 'react';
+
+import { Question, QuestionsData, StatusMessageDataResponse } from '@/lib/types';
 
 const useQuestions = (url: string) => {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -18,7 +19,7 @@ const useQuestions = (url: string) => {
   useEffect(() => {
     const fetchQuestions = async () => {
       const response = await fetch(url);
-      const result: StatusMessageDataResponse<{ questions: Question[] }> = await response.json();
+      const result: StatusMessageDataResponse<QuestionsData> = await response.json();
       setQuestions(result.data.questions);
       shuffleQuestions();
     };

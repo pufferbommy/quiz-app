@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { verseSchema } from '@/schemas/joke/verse';
-import { Question, StatusMessageDataResponse, VerseAnswer } from '@/lib/types';
+import { QuestionsData, StatusMessageDataResponse, VerseAnswer } from '@/lib/types';
 
 const prisma = new PrismaClient();
 
@@ -11,7 +11,7 @@ export async function GET() {
     where: { group: 'health' },
     select: { id: true, image_path: true },
   });
-  return NextResponse.json<StatusMessageDataResponse<{ questions: Question[] }>>(
+  return NextResponse.json<StatusMessageDataResponse<QuestionsData>>(
     {
       status: 'success',
       message: 'Get all questions successfully',

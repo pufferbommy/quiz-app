@@ -23,3 +23,7 @@ export interface UserData {
   userId: string;
   roleId: number;
 }
+
+export interface QuestionsData {
+  questions: Question[];
+}

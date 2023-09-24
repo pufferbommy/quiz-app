@@ -2,20 +2,24 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { verseSchema } from '@/schemas/joke/verse';
 
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 export async function GET() {
-  const mockData = [
-    { no: 1, imgPath: '/images/verse/general/01.JPG' },
-    { no: 2, imgPath: '/images/verse/general/02.JPG' },
-    { no: 3, imgPath: '/images/verse/general/03.JPG' },
-    { no: 4, imgPath: '/images/verse/general/04.JPG' },
-    { no: 5, imgPath: '/images/verse/general/05.JPG' },
-    { no: 6, imgPath: '/images/verse/general/06.JPG' },
-    { no: 7, imgPath: '/images/verse/general/07.JPG' },
-    { no: 8, imgPath: '/images/verse/general/08.JPG' },
-    { no: 9, imgPath: '/images/verse/general/09.JPG' },
-    { no: 10, imgPath: '/images/verse/general/10.JPG' },
-  ];
-  return NextResponse.json({ mockData }, { status: 200 });
+  // const mockData = [
+  //   { no: 1, imgPath: '/images/verse/general/01.JPG' },
+  //   { no: 2, imgPath: '/images/verse/general/02.JPG' },
+  //   { no: 3, imgPath: '/images/verse/general/03.JPG' },
+  //   { no: 4, imgPath: '/images/verse/general/04.JPG' },
+  //   { no: 5, imgPath: '/images/verse/general/05.JPG' },
+  //   { no: 6, imgPath: '/images/verse/general/06.JPG' },
+  //   { no: 7, imgPath: '/images/verse/general/07.JPG' },
+  //   { no: 8, imgPath: '/images/verse/general/08.JPG' },
+  //   { no: 9, imgPath: '/images/verse/general/09.JPG' },
+  //   { no: 10, imgPath: '/images/verse/general/10.JPG' },
+  // ];
+  const questions = await prisma.verse_questions.findMany({ where: { group: 'health' } });
+  return NextResponse.json({ questions }, { status: 200 });
 }
 
 export async function POST(request: NextRequest) {
@@ -132,6 +136,12 @@ export async function POST(request: NextRequest) {
   const matchingItem = mockAnswers.find(element => {
     return element.no === no;
   });
+
+  const question = await prisma.verse_questions.findFirst({ where: { id: no } });
+
+  if (question === null) {
+    return NextResponse.json({ message: 'ไม่พบข้อที่คุณต้องการ' }, { status: 404 });
+  }
 
   const isCorrect = () => {
     const answer = matchingItem?.answer;

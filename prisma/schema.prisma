@@ -27,6 +27,7 @@ model verse_questions {
   image_path String
   answer     String
   meaning    String   @db.Text
+  group      String
   create_at  DateTime @default(now())
 }
 
@@ -35,5 +36,6 @@ model image_questions {
   image_path String
   answer     String
   meaning    String   @db.Text
+  group      String
   create_at  DateTime @default(now())
 }

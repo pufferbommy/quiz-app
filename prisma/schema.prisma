@@ -41,3 +41,8 @@ model image_questions {
   create_at  DateTime @default(now())
   group      String
 }
+
+model visitor_counters {
+  id    Int @id
+  count Int
+}

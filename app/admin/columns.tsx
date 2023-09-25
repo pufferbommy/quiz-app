@@ -1,7 +1,8 @@
+import Image from 'next/image';
+import { Pencil, Trash } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
-import { Pencil, Trash } from 'lucide-react';
-import Image from 'next/image';
 
 export interface Question {
   id: number;
@@ -44,7 +45,7 @@ export const columns: ColumnDef<Question>[] = [
     cell: ({ row }) => {
       return (
         <div className="relative rounded-md border border-input overflow-hidden aspect-video">
-          <Image fill src={row.getValue('imgPath')} alt="" />
+          <Image priority sizes="100%" fill src={row.getValue('imgPath')} alt="" />
         </div>
       );
     },

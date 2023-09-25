@@ -112,7 +112,7 @@ const Admin = () => {
     {
       id: 10,
       no: 10,
-      imgPath: '/images/verse/general/10.JPG',
+      imgPath: '/images/verse/general/010.JPG',
       answer: {
         first: 'น้ำนม',
         second: 'น้ำฝน',

@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
   if (isMatch) {
     const userId = user.id;
     const roleId = user.role_id;
+    await prisma.visitor_counters.update({ where: { id: 1 }, data: { count: { increment: 1 } } });
     return NextResponse.json<StatusMessageDataResponse<UserData>>(
       {
         status: 'success',

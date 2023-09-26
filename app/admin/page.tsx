@@ -13,7 +13,7 @@ const Admin = () => {
     {
       id: 1,
       no: 1,
-      imgPath: '/images/verse/general/01.JPG',
+      imgPath: '/images/verse/general/1.jpg',
       answer: {
         first: 'ทดสอบ',
         second: 'ทดสอบ',
@@ -24,7 +24,7 @@ const Admin = () => {
     {
       id: 2,
       no: 2,
-      imgPath: '/images/verse/general/02.JPG',
+      imgPath: '/images/verse/general/2.jpg',
       answer: {
         first: 'หมู',
         second: 'ไป',
@@ -35,7 +35,7 @@ const Admin = () => {
     {
       id: 3,
       no: 3,
-      imgPath: '/images/verse/general/03.JPG',
+      imgPath: '/images/verse/general/3.jpg',
       answer: {
         first: 'น้ำตา',
         second: 'น้ำชา',
@@ -46,7 +46,7 @@ const Admin = () => {
     {
       id: 4,
       no: 4,
-      imgPath: '/images/verse/general/04.JPG',
+      imgPath: '/images/verse/general/4.jpg',
       answer: {
         first: 'แกว่ง',
         second: 'เท้า',
@@ -57,7 +57,7 @@ const Admin = () => {
     {
       id: 5,
       no: 5,
-      imgPath: '/images/verse/general/05.JPG',
+      imgPath: '/images/verse/general/5.jpg',
       answer: {
         first: 'จับ',
         second: 'ปลา',
@@ -68,7 +68,7 @@ const Admin = () => {
     {
       id: 6,
       no: 6,
-      imgPath: '/images/verse/general/06.JPG',
+      imgPath: '/images/verse/general/6.jpg',
       answer: {
         first: 'ทดสอบ',
         second: 'ทดสอบ',
@@ -79,7 +79,7 @@ const Admin = () => {
     {
       id: 7,
       no: 7,
-      imgPath: '/images/verse/general/07.JPG',
+      imgPath: '/images/verse/general/7.jpg',
       answer: {
         first: 'ทดสอบ',
         second: 'ทดสอบ',
@@ -90,7 +90,7 @@ const Admin = () => {
     {
       id: 8,
       no: 8,
-      imgPath: '/images/verse/general/08.JPG',
+      imgPath: '/images/verse/general/8.jpg',
       answer: {
         first: 'ทดสอบ',
         second: 'ทดสอบ',
@@ -101,7 +101,7 @@ const Admin = () => {
     {
       id: 9,
       no: 9,
-      imgPath: '/images/verse/general/09.JPG',
+      imgPath: '/images/verse/general/9.jpg',
       answer: {
         first: 'คัด',
         second: 'ตึง',
@@ -110,9 +110,9 @@ const Admin = () => {
       },
     },
     {
-      id: 10,
-      no: 10,
-      imgPath: '/images/verse/general/010.JPG',
+      id: 1,
+      no: 1,
+      imgPath: '/images/verse/general/10.jpg',
       answer: {
         first: 'น้ำนม',
         second: 'น้ำฝน',

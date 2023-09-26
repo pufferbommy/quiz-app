@@ -87,7 +87,7 @@ async function main() {
   const verseQuestions = [
     {
       id: 1,
-      image_path: '/images/verse/general/1.JPG',
+      image_path: '/images/verse/general/1.jpg',
       answer: JSON.stringify({
         first: 'ทดสอบ',
         second: 'ทดสอบ',
@@ -99,7 +99,7 @@ async function main() {
     },
     {
       id: 2,
-      image_path: '/images/verse/general/2.JPG',
+      image_path: '/images/verse/general/2.jpg',
       answer: JSON.stringify({
         first: 'หมู',
         second: 'ไป',
@@ -111,7 +111,7 @@ async function main() {
     },
     {
       id: 3,
-      image_path: '/images/verse/general/3.JPG',
+      image_path: '/images/verse/general/3.jpg',
       answer: JSON.stringify({
         first: 'น้ำตา',
         second: 'น้ำชา',
@@ -123,7 +123,7 @@ async function main() {
     },
     {
       id: 4,
-      image_path: '/images/verse/general/4.JPG',
+      image_path: '/images/verse/general/4.jpg',
       answer: JSON.stringify({
         first: 'แกว่ง',
         second: 'เท้า',
@@ -135,7 +135,7 @@ async function main() {
     },
     {
       id: 5,
-      image_path: '/images/verse/general/5.JPG',
+      image_path: '/images/verse/general/5.jpg',
       answer: JSON.stringify({
         first: 'จับ',
         second: 'ปลา',
@@ -147,7 +147,7 @@ async function main() {
     },
     {
       id: 6,
-      image_path: '/images/verse/general/6.JPG',
+      image_path: '/images/verse/general/6.jpg',
       answer: JSON.stringify({
         first: 'ทดสอบ',
         second: 'ทดสอบ',
@@ -159,7 +159,7 @@ async function main() {
     },
     {
       id: 7,
-      image_path: '/images/verse/general/7.JPG',
+      image_path: '/images/verse/general/7.jpg',
       answer: JSON.stringify({
         first: 'ทดสอบ',
         second: 'ทดสอบ',
@@ -171,7 +171,7 @@ async function main() {
     },
     {
       id: 8,
-      image_path: '/images/verse/general/8.JPG',
+      image_path: '/images/verse/general/8.jpg',
       answer: JSON.stringify({
         first: 'ทดสอบ',
         second: 'ทดสอบ',
@@ -183,7 +183,7 @@ async function main() {
     },
     {
       id: 9,
-      image_path: '/images/verse/general/9.JPG',
+      image_path: '/images/verse/general/9.jpg',
       answer: JSON.stringify({
         first: 'คัด',
         second: 'ตึง',
@@ -195,7 +195,7 @@ async function main() {
     },
     {
       id: 10,
-      image_path: '/images/verse/general/10.JPG',
+      image_path: '/images/verse/general/10.jpg',
       answer: JSON.stringify({
         first: 'น้ำนม',
         second: 'น้ำฝน',

@@ -49,7 +49,14 @@ export async function POST(req: NextRequest) {
 
   try {
     const newUser = await prisma.users.create({ data: user });
-    await prisma.visitor_counters.update({ where: { id: 1 }, data: { count: { increment: 1 } } });
+    await prisma.visitor_counters.upsert({
+      where: { id: 1 },
+      create: {
+        id: 1,
+        count: 1,
+      },
+      update: { count: { increment: 1 } },
+    });
     return NextResponse.json<StatusMessageDataResponse<UserData>>(
       {
         status: 'success',

@@ -165,7 +165,7 @@ const VerseForm = ({ url, questionId, nextQuestion, isLoadingImage, setIsLoading
                 ))}
             </ul>
             <div className="bg-secondary border p-4 tracking-wide rounded-md">
-              {response.meaning}
+              {response.meaning || '-'}
             </div>
           </div>
         </>

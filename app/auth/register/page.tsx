@@ -12,7 +12,9 @@ const Register = () => {
       <div className="flex justify-center gap-2 text-sm items-center mt-4">
         <p>เป็นสมาชิกอยู่แล้ว?</p>
         <Link href="/auth/login">
-          <Button variant="link">เข้าสู่ระบบ</Button>
+          <Button size="lg" variant="link">
+            เข้าสู่ระบบ
+          </Button>
         </Link>
       </div>
     </>

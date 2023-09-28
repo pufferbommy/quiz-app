@@ -1,156 +1,109 @@
 'use client';
 
-import { Plus } from 'lucide-react';
+import { createContext, useCallback, useEffect, useState } from 'react';
 
+import {
+  AdminQuestion,
+  AdminQuestionsData,
+  StatusMessageResponse,
+  StatusMessageDataResponse,
+} from '@/lib/types';
+import { columns } from './columns';
 import { DataTable } from './data-table';
 import Title from '@/components/text/title';
-import { Question, columns } from './columns';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 import withAdminAuth from '@/components/wrapper/withAdminAuth';
+import CreateQuestionDialog from '@/components/dialog/CreateQuestionDialog';
+
+export const AdminContext = createContext<{
+  deleteQuestion: (questionId: number) => Promise<void>;
+  fetchQuestions: () => Promise<void>;
+}>({
+  deleteQuestion: async () => {},
+  fetchQuestions: async () => {},
+});
 
 const Admin = () => {
-  const data: Question[] = [
-    {
-      id: 1,
-      no: 1,
-      imgPath: '/images/verse/general/1.jpg',
-      answer: {
-        first: 'ทดสอบ',
-        second: 'ทดสอบ',
-        third: 'ทดสอบ',
-        fourth: 'ทดสอบ',
-      },
-    },
-    {
-      id: 2,
-      no: 2,
-      imgPath: '/images/verse/general/2.jpg',
-      answer: {
-        first: 'หมู',
-        second: 'ไป',
-        third: 'ไก่',
-        fourth: 'มา',
-      },
-    },
-    {
-      id: 3,
-      no: 3,
-      imgPath: '/images/verse/general/3.jpg',
-      answer: {
-        first: 'น้ำตา',
-        second: 'น้ำชา',
-        third: 'น้ำยา',
-        fourth: 'น้ำมา',
-      },
-    },
-    {
-      id: 4,
-      no: 4,
-      imgPath: '/images/verse/general/4.jpg',
-      answer: {
-        first: 'แกว่ง',
-        second: 'เท้า',
-        third: 'หา',
-        fourth: 'เสี้ยน',
-      },
-    },
-    {
-      id: 5,
-      no: 5,
-      imgPath: '/images/verse/general/5.jpg',
-      answer: {
-        first: 'จับ',
-        second: 'ปลา',
-        third: 'สอง',
-        fourth: 'มือ',
-      },
-    },
-    {
-      id: 6,
-      no: 6,
-      imgPath: '/images/verse/general/6.jpg',
-      answer: {
-        first: 'ทดสอบ',
-        second: 'ทดสอบ',
-        third: 'ทดสอบ',
-        fourth: 'ทดสอบ',
-      },
-    },
-    {
-      id: 7,
-      no: 7,
-      imgPath: '/images/verse/general/7.jpg',
-      answer: {
-        first: 'ทดสอบ',
-        second: 'ทดสอบ',
-        third: 'ทดสอบ',
-        fourth: 'ทดสอบ',
-      },
-    },
-    {
-      id: 8,
-      no: 8,
-      imgPath: '/images/verse/general/8.jpg',
-      answer: {
-        first: 'ทดสอบ',
-        second: 'ทดสอบ',
-        third: 'ทดสอบ',
-        fourth: 'ทดสอบ',
-      },
-    },
-    {
-      id: 9,
-      no: 9,
-      imgPath: '/images/verse/general/9.jpg',
-      answer: {
-        first: 'คัด',
-        second: 'ตึง',
-        third: 'ดึง',
-        fourth: 'เต้า',
-      },
-    },
-    {
-      id: 1,
-      no: 1,
-      imgPath: '/images/verse/general/10.jpg',
-      answer: {
-        first: 'น้ำนม',
-        second: 'น้ำฝน',
-        third: 'น้ำใจ',
-        fourth: 'น้ำสุรา',
-      },
-    },
-  ];
+  const { toast } = useToast();
+  const [category, setCategory] = useState<'verse' | 'image'>('verse');
+  const [subCategory, setSubCategory] = useState<'health' | 'general'>('health');
+  const [questions, setQuestions] = useState<AdminQuestion[]>([]);
+
+  const fetchQuestions = useCallback(async () => {
+    const response = await fetch(`/api/v1/admin/${category}s/${subCategory}`);
+    const result: StatusMessageDataResponse<AdminQuestionsData> = await response.json();
+    setQuestions(result.data.questions);
+  }, [category, subCategory]);
+
+  const deleteQuestion = async (questionId: number) => {
+    const response = await fetch(`/api/v1/admin/${category}s?questionId=${questionId}`, {
+      method: 'DELETE',
+    });
+    const result: StatusMessageResponse = await response.json();
+    toast({
+      title: result.status,
+      description: result.message,
+      variant: result.status === 'success' ? 'default' : 'destructive',
+    });
+    fetchQuestions();
+  };
+
+  useEffect(() => {
+    fetchQuestions();
+  }, [fetchQuestions]);
 
   return (
-    <>
+    <AdminContext.Provider
+      value={{
+        deleteQuestion,
+        fetchQuestions,
+      }}
+    >
       <Title>แอดมิน</Title>
       <div className="mb-4 flex items-end gap-8 justify-between">
         <div className="flex gap-8">
-          <div>
-            <h2 className="mb-2">หมวดหมู่หลัก</h2>
-            <div className="flex gap-2 ">
-              <Button>กลอน</Button>
-              <Button variant="outline">รูป</Button>
-            </div>
+          <div className="flex gap-2 items-center">
+            <h3>หมวดหลัก</h3>
+            <Button
+              variant={category === 'verse' ? 'default' : 'outline'}
+              onClick={() => setCategory('verse')}
+              size="sm"
+            >
+              กลอน
+            </Button>
+            <Button
+              variant={category === 'image' ? 'default' : 'outline'}
+              onClick={() => setCategory('image')}
+              size="sm"
+            >
+              รูป
+            </Button>
           </div>
-          <div>
-            <h2 className="mb-2">หมวดหมู่รอง</h2>
-            <div className="flex gap-2 ">
-              <Button>สุขภาพ</Button>
-              <Button variant="outline">ทั่วไป</Button>
-            </div>
+          <div className="flex gap-2 items-center">
+            <h3>หมวดย่อย</h3>
+            <Button
+              variant={subCategory === 'health' ? 'default' : 'outline'}
+              onClick={() => setSubCategory('health')}
+              size="sm"
+            >
+              สุขภาพ
+            </Button>
+            <Button
+              variant={subCategory === 'general' ? 'default' : 'outline'}
+              onClick={() => setSubCategory('general')}
+              size="sm"
+            >
+              ทั่วไป
+            </Button>
           </div>
         </div>
         <div className="flex gap-2">
-          <Button>
-            <Plus className="w-4 h-4 mr-1" />
-            เพิ่ม
-          </Button>
+          <CreateQuestionDialog />
         </div>
       </div>
-      <DataTable columns={columns} data={data} />
-    </>
+      <DataTable columns={columns} data={questions} />
+    </AdminContext.Provider>
   );
 };
 

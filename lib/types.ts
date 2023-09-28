@@ -12,6 +12,10 @@ export interface Question {
   imagePath: string;
 }
 
+export interface AdminQuestion extends Question {
+  answer: string | VerseAnswer;
+}
+
 export interface VerseAnswer {
   first: string;
   second: string;
@@ -26,4 +30,12 @@ export interface UserData {
 
 export interface QuestionsData {
   questions: Question[];
+}
+
+export interface AdminQuestionsData {
+  questions: AdminQuestion[];
+}
+
+export interface UploadFileSuccessData {
+  filePath: string;
 }

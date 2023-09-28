@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { StatusMessageDataResponse, QuestionsData } from '@/lib/types';
-import { createImgSchema } from '@/schemas/joke/img';
+import { imageQuestionSchema } from '@/schemas/joke/question';
+import { StatusMessageDataResponse, QuestionsData, StatusMessageResponse } from '@/lib/types';
 
 const prisma = new PrismaClient();
 
@@ -24,10 +24,11 @@ export async function GET() {
     { status: 200 }
   );
 }
+
 export async function POST(request: NextRequest) {
   const json = await request.json();
 
-  const parsed = createImgSchema.safeParse(json);
+  const parsed = imageQuestionSchema.safeParse(json);
 
   if (!parsed.success) {
     return NextResponse.json(
@@ -40,11 +41,27 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { answer, meaning } = parsed.data;
+  const { imagePath, answer, meaning } = parsed.data;
 
-  const isCreate = await prisma.image_questions.create({
-    data: { image_path: 'test', answer: answer, meaning: meaning, group: 'general' },
+  const question = await prisma.image_questions.create({
+    data: { image_path: imagePath, answer, meaning, group: 'general' },
   });
 
-  return NextResponse.json({ message: isCreate }, { status: 200 });
+  if (question) {
+    return NextResponse.json<StatusMessageResponse>(
+      {
+        status: 'success',
+        message: 'สร้างคำถามสำเร็จ',
+      },
+      { status: 200 }
+    );
+  } else {
+    return NextResponse.json<StatusMessageResponse>(
+      {
+        status: 'error',
+        message: 'สร้างคำถามไม่สำเร็จ',
+      },
+      { status: 400 }
+    );
+  }
 }

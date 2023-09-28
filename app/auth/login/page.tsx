@@ -12,7 +12,9 @@ const Login = () => {
       <div className="flex justify-center gap-2 text-sm items-center mt-4">
         <p>ยังไม่ได้เป็นสมาชิก?</p>
         <Link href="/auth/register">
-          <Button variant="link">สมัคร</Button>
+          <Button size="lg" variant="link">
+            สมัคร
+          </Button>
         </Link>
       </div>
     </>

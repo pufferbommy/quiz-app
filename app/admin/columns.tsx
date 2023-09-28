@@ -1,51 +1,50 @@
 import Image from 'next/image';
+import { useContext } from 'react';
 import { Pencil, Trash } from 'lucide-react';
-
-import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 
-export interface Question {
-  id: number;
-  no: number;
-  imgPath: string;
-  answer: {
-    first: string;
-    second: string;
-    third: string;
-    fourth: string;
-  };
+import { AdminContext } from './page';
+import { AdminQuestion } from '@/lib/types';
+import { Button } from '@/components/ui/button';
+
+interface ActionsProps {
+  questionId: number;
 }
 
-export const columns: ColumnDef<Question>[] = [
+const Actions = ({ questionId }: ActionsProps) => {
+  const { deleteQuestion } = useContext(AdminContext);
+
+  const handleDeleteQuestionClick = async () => {
+    const isConfirmed = confirm('คุณต้องการลบคำถามนี้ใช่หรือไม่');
+    if (isConfirmed) deleteQuestion(questionId);
+  };
+
+  return (
+    <div className="flex justify-center gap-2">
+      <Button variant="outline" size="icon">
+        <Pencil className="w-4 h-4" />
+      </Button>
+      <Button onClick={handleDeleteQuestionClick} variant="outline" size="icon">
+        <Trash className="w-4 h-4" />
+      </Button>
+    </div>
+  );
+};
+
+export const columns: ColumnDef<AdminQuestion>[] = [
   {
-    accessorKey: 'no',
-    header: 'ลำดับ',
-    size: 0,
-  },
-  {
-    id: 'action',
     header: 'การจัดการ',
     size: 0,
-    cell: ({ row }) => {
-      return (
-        <div className="flex justify-center gap-2">
-          <Button variant="outline" size="icon">
-            <Pencil className="w-4 h-4" />
-          </Button>
-          <Button variant="outline" size="icon">
-            <Trash className="w-4 h-4" />
-          </Button>
-        </div>
-      );
-    },
+    cell: ({ row }) => <Actions questionId={row.original.id} />,
   },
   {
-    accessorKey: 'imgPath',
+    accessorKey: 'imagePath',
     header: 'รูป',
+    size: 300,
     cell: ({ row }) => {
       return (
         <div className="relative rounded-md border border-input overflow-hidden aspect-video">
-          <Image priority sizes="100%" fill src={row.getValue('imgPath')} alt="" />
+          <Image fill priority sizes="100%" src={row.getValue('imagePath')} alt="" />
         </div>
       );
     },
@@ -54,7 +53,11 @@ export const columns: ColumnDef<Question>[] = [
     accessorKey: 'answer',
     header: 'คำตอบ',
     cell: ({ row }) => {
-      const { first, second, third, fourth } = row.getValue('answer') as Question['answer'];
+      const answer = row.getValue('answer') as AdminQuestion['answer'];
+      if (typeof answer === 'string') {
+        return <p>{answer}</p>;
+      }
+      const { first, second, third, fourth } = answer;
       return (
         <ul className="flex flex-col gap-2">
           <li>1. {first}</li>

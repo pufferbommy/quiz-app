@@ -109,7 +109,9 @@ const ImageForm = ({ url, questionId, nextQuestion, isLoadingImage, setIsLoading
         <div className="text-center mb-4">
           <h2 className="text-2xl underline underline-offset-4 mb-4">เฉลย</h2>
           <h3 className="text-lg mb-4">{response.answer}</h3>
-          <div className="bg-secondary border p-4 tracking-wide rounded-md">{response.meaning}</div>
+          <div className="bg-secondary border p-4 tracking-wide rounded-md">
+            {response.meaning || '-'}
+          </div>
         </div>
       )}
       {response?.isCorrect && (

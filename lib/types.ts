@@ -14,6 +14,9 @@ export interface Question {
 
 export interface AdminQuestion extends Question {
   answer: string | VerseAnswer;
+  meaning: string;
+  category: string;
+  subCategory: string;
 }
 
 export interface VerseAnswer {
@@ -30,6 +33,10 @@ export interface UserData {
 
 export interface QuestionsData {
   questions: Question[];
+}
+
+export interface AdminQuestionData {
+  question: AdminQuestion;
 }
 
 export interface AdminQuestionsData {

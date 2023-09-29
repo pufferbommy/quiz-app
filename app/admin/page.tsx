@@ -31,22 +31,68 @@ const Admin = () => {
   const [questions, setQuestions] = useState<AdminQuestion[]>([]);
 
   const fetchQuestions = useCallback(async () => {
-    const response = await fetch(`/api/v1/admin/${category}s/${subCategory}`);
-    const result: StatusMessageDataResponse<AdminQuestionsData> = await response.json();
-    setQuestions(result.data.questions);
-  }, [category, subCategory]);
+    try {
+      const response = await fetch(`/api/v1/admin/${category}s/${subCategory}`);
+      if (!response.ok) throw new Error('Failed to fetch questions');
+
+      const result: StatusMessageDataResponse<AdminQuestionsData> = await response.json();
+      setQuestions(result.data.questions);
+    } catch (error) {
+      const errorMessage = (error as Error).message || 'An error occurred.';
+      toast({
+        title: 'Error',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+    }
+  }, [category, subCategory, toast]);
 
   const deleteQuestion = async (questionId: number) => {
-    const response = await fetch(`/api/v1/admin/${category}s?questionId=${questionId}`, {
-      method: 'DELETE',
-    });
-    const result: StatusMessageResponse = await response.json();
-    toast({
-      title: result.status,
-      description: result.message,
-      variant: result.status === 'success' ? 'default' : 'destructive',
-    });
-    fetchQuestions();
+    try {
+      const response = await fetch(`/api/v1/admin/${category}s?questionId=${questionId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Failed to delete question');
+
+      const result: StatusMessageResponse = await response.json();
+      toast({
+        title: result.status,
+        description: result.message,
+      });
+
+      fetchQuestions();
+    } catch (error) {
+      const errorMessage = (error as Error).message || 'An error occurred.';
+      toast({
+        title: 'Error',
+        description: errorMessage,
+        variant: 'default',
+      });
+    }
+  };
+
+  const renderCategoryButton = (value: 'verse' | 'image', label: string) => {
+    return (
+      <Button
+        variant={category === value ? 'default' : 'outline'}
+        onClick={() => setCategory(value)}
+        size="sm"
+      >
+        {label}
+      </Button>
+    );
+  };
+
+  const renderSubCategoryButton = (value: 'health' | 'general', label: string) => {
+    return (
+      <Button
+        variant={subCategory === value ? 'default' : 'outline'}
+        onClick={() => setSubCategory(value)}
+        size="sm"
+      >
+        {label}
+      </Button>
+    );
   };
 
   useEffect(() => {
@@ -65,42 +111,16 @@ const Admin = () => {
         <div className="flex gap-8">
           <div className="flex gap-2 items-center">
             <h3>หมวดหลัก</h3>
-            <Button
-              variant={category === 'verse' ? 'default' : 'outline'}
-              onClick={() => setCategory('verse')}
-              size="sm"
-            >
-              กลอน
-            </Button>
-            <Button
-              variant={category === 'image' ? 'default' : 'outline'}
-              onClick={() => setCategory('image')}
-              size="sm"
-            >
-              รูป
-            </Button>
+            {renderCategoryButton('verse', 'กลอน')}
+            {renderCategoryButton('image', 'รูป')}
           </div>
           <div className="flex gap-2 items-center">
             <h3>หมวดย่อย</h3>
-            <Button
-              variant={subCategory === 'health' ? 'default' : 'outline'}
-              onClick={() => setSubCategory('health')}
-              size="sm"
-            >
-              สุขภาพ
-            </Button>
-            <Button
-              variant={subCategory === 'general' ? 'default' : 'outline'}
-              onClick={() => setSubCategory('general')}
-              size="sm"
-            >
-              ทั่วไป
-            </Button>
+            {renderSubCategoryButton('health', 'สุขภาพ')}
+            {renderSubCategoryButton('general', 'ทั่วไป')}
           </div>
         </div>
-        <div className="flex gap-2">
-          <CreateQuestionDialog />
-        </div>
+        <CreateQuestionDialog />
       </div>
       <DataTable columns={columns} data={questions} />
     </AdminContext.Provider>

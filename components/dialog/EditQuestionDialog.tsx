@@ -1,11 +1,13 @@
 import Image from 'next/image';
-import { Plus } from 'lucide-react';
-import { ChangeEvent, useContext, useEffect, useMemo, useState } from 'react';
+import { Pencil } from 'lucide-react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 
 import {
+  AdminQuestionData,
   StatusMessageDataResponse,
   StatusMessageResponse,
   UploadFileSuccessData,
+  VerseAnswer,
 } from '@/lib/types';
 import {
   Select,
@@ -37,23 +39,26 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { AdminContext } from '@/app/admin/page';
 
-const CreateQuestionDialog = () => {
+interface EditQuestionDialogProps {
+  oldCategory: string;
+  questionId: number;
+}
+
+const EditQuestionDialog = ({ oldCategory, questionId }: EditQuestionDialogProps) => {
   const { fetchQuestions } = useContext(AdminContext);
   const { toast } = useToast();
   const [category, setCategory] = useState<null | 'verse' | 'image'>(null);
   const [subCategory, setSubCategory] = useState<null | 'health' | 'general'>(null);
   const [open, setOpen] = useState(false);
+  const [meaning, setMeaning] = useState('');
 
   const [selectedImage, setSelectedImage] = useState<File>();
-
-  const selectedImageUrl = useMemo(() => {
-    if (!selectedImage) return '';
-    return URL.createObjectURL(selectedImage!);
-  }, [selectedImage]);
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string>('');
 
   const imageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedImage(e.target.files[0]);
+      setSelectedImageUrl(URL.createObjectURL(e.target.files[0]));
     }
   };
 
@@ -81,44 +86,80 @@ const CreateQuestionDialog = () => {
   });
 
   const onSubmit = async (values: VerseQuestionSchema | ImageQuestionSchema) => {
-    if ((verseForm.formState.isSubmitted || imageForm.formState.isSubmitted) && !selectedImage) {
+    if (
+      (verseForm.formState.isSubmitted || imageForm.formState.isSubmitted) &&
+      (!selectedImage || !selectedImageUrl)
+    ) {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('file', selectedImage as File);
-    const uploadFileResponse = await fetch(`/api/v1/files`, {
-      body: formData,
-      method: 'POST',
-    });
-    const uploadFileResult: StatusMessageDataResponse<UploadFileSuccessData> =
-      await uploadFileResponse.json();
-    const createQuestionResponse = await fetch(`/api/v1/admin/${category}s/${subCategory}`, {
-      body: JSON.stringify({
-        ...values,
-        imagePath: uploadFileResult.data.filePath,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    });
-    const createQuestionResult: StatusMessageResponse = await createQuestionResponse.json();
+    let uploadFileResultDataFilePath = selectedImageUrl;
+
+    if (selectedImage) {
+      const formData = new FormData();
+      formData.append('file', selectedImage as File);
+      const uploadFileResponse = await fetch(`/api/v1/files`, {
+        body: formData,
+        method: 'POST',
+      });
+      const uploadFileResult: StatusMessageDataResponse<UploadFileSuccessData> =
+        await uploadFileResponse.json();
+      uploadFileResultDataFilePath = uploadFileResult.data.filePath;
+    }
+
+    const updateQuestionResponse = await fetch(
+      `/api/v1/admin/${category}s/${subCategory}?questionId=${questionId}`,
+      {
+        body: JSON.stringify({
+          ...values,
+          imagePath: uploadFileResultDataFilePath,
+          meaning,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'PUT',
+      }
+    );
+    const updateQuestionResult: StatusMessageResponse = await updateQuestionResponse.json();
     toast({
-      title: createQuestionResult.status,
-      description: createQuestionResult.message,
-      variant: createQuestionResult.status === 'success' ? 'default' : 'destructive',
+      title: updateQuestionResult.status,
+      description: updateQuestionResult.message,
+      variant: updateQuestionResult.status === 'success' ? 'default' : 'destructive',
     });
     setOpen(false);
     fetchQuestions();
   };
 
   useEffect(() => {
-    if (!open) {
+    if (open) {
+      (async () => {
+        const response = await fetch(
+          `/api/v1/admin/questions?category=${oldCategory}&questionId=${questionId}`
+        );
+        const result: StatusMessageDataResponse<AdminQuestionData> = await response.json();
+        const { question } = result.data;
+        if (question) {
+          setCategory(question.category as 'verse' | 'image');
+          setSubCategory(question.subCategory as 'health' | 'general');
+          setSelectedImageUrl(question.imagePath);
+          setMeaning(question.meaning);
+          if (question.category === 'verse') {
+            const { first, second, third, fourth } = question.answer as VerseAnswer;
+            verseForm.setValue('answer.first', first);
+            verseForm.setValue('answer.second', second);
+            verseForm.setValue('answer.third', third);
+            verseForm.setValue('answer.fourth', fourth);
+            verseForm.setValue('meaning', '5555');
+          } else {
+            imageForm.setValue('answer', question.answer as string);
+          }
+        }
+      })();
+    } else {
       imageForm.reset();
       verseForm.reset();
       setSelectedImage(undefined);
-      URL.revokeObjectURL(selectedImageUrl);
       setCategory(null);
       setSubCategory(null);
     }
@@ -127,14 +168,13 @@ const CreateQuestionDialog = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button onClick={() => setOpen(true)}>
-          <Plus className="w-4 h-4 mr-1" />
-          เพิ่ม
+        <Button variant="outline" size="icon" onClick={() => setOpen(true)}>
+          <Pencil className="w-4 h-4" />
         </Button>
       </DialogTrigger>
       <DialogContent autoFocus={false} className="sm:max-w-[425px] overflow-y-scroll max-h-screen">
         <DialogHeader>
-          <DialogTitle>เพิ่มคำถาม</DialogTitle>
+          <DialogTitle>แก้ไขคำถาม</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 pt-4">
           <div>
@@ -149,21 +189,22 @@ const CreateQuestionDialog = () => {
               />
             </div>
             {(verseForm.formState.isSubmitted || imageForm.formState.isSubmitted) &&
-              !selectedImage && (
+              !selectedImageUrl && (
                 <div className="grid grid-cols-4 items-center gap-4 mt-2">
                   <div></div>
                   <p className="text-sm font-medium text-destructive col-span-3">กรุณาเลือกรูป</p>
                 </div>
               )}
           </div>
-          {selectedImage && (
-            <div className="relative border w-full h-[208.94px] rounded-md aspect-video overflow-hidden">
+          {selectedImageUrl && (
+            <div className="relative border w-full rounded-md aspect-video overflow-hidden">
               <Image sizes="100%" className="w-full" fill src={selectedImageUrl} alt="" />
             </div>
           )}
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="category">หมวดหลัก</Label>
             <Select
+              value={category!}
               onValueChange={value => {
                 verseForm.reset();
                 imageForm.reset();
@@ -181,7 +222,10 @@ const CreateQuestionDialog = () => {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="subCategory">หมวดย่อย</Label>
-            <Select onValueChange={value => setSubCategory(value as 'health' | 'general')}>
+            <Select
+              value={subCategory!}
+              onValueChange={value => setSubCategory(value as 'health' | 'general')}
+            >
               <SelectTrigger id="subCategory" className="col-span-3">
                 <SelectValue placeholder="เลือกหมวดย่อย" />
               </SelectTrigger>
@@ -212,24 +256,20 @@ const CreateQuestionDialog = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={imageForm.control}
-                  name="meaning"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <FormLabel htmlFor="meaning">ความหมาย</FormLabel>
-                        <FormControl className="col-span-3 !mt-0">
-                          <Textarea id="meaning" className="resize-none" {...field} />
-                        </FormControl>
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <div></div>
-                        <FormMessage className="col-span-3" />
-                      </div>
-                    </FormItem>
-                  )}
-                />
+                <FormItem>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <FormLabel htmlFor="meaning">ความหมาย</FormLabel>
+                    <FormControl className="col-span-3 !mt-0">
+                      <Textarea
+                        rows={4}
+                        id="meaning"
+                        className="resize-none"
+                        value={meaning}
+                        onChange={e => setMeaning(e.target.value)}
+                      />
+                    </FormControl>
+                  </div>
+                </FormItem>
                 <div className="flex justify-end gap-2">
                   <Button onClick={() => setOpen(false)} type="button" variant="outline">
                     ยกเลิก
@@ -314,24 +354,20 @@ const CreateQuestionDialog = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={imageForm.control}
-                  name="meaning"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <FormLabel htmlFor="meaning">ความหมาย</FormLabel>
-                        <FormControl className="col-span-3 !mt-0">
-                          <Textarea id="meaning" className="resize-none" {...field} />
-                        </FormControl>
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <div></div>
-                        <FormMessage className="col-span-3" />
-                      </div>
-                    </FormItem>
-                  )}
-                />
+                <FormItem>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <FormLabel htmlFor="meaning">ความหมาย</FormLabel>
+                    <FormControl className="col-span-3 !mt-0">
+                      <Textarea
+                        rows={4}
+                        id="meaning"
+                        className="resize-none"
+                        value={meaning}
+                        onChange={e => setMeaning(e.target.value)}
+                      />
+                    </FormControl>
+                  </div>
+                </FormItem>
                 <div className="flex justify-end gap-2">
                   <Button onClick={() => setOpen(false)} type="button" variant="outline">
                     ยกเลิก
@@ -347,4 +383,4 @@ const CreateQuestionDialog = () => {
   );
 };
 
-export default CreateQuestionDialog;
+export default EditQuestionDialog;

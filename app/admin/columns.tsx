@@ -1,17 +1,19 @@
 import Image from 'next/image';
 import { useContext } from 'react';
-import { Pencil, Trash } from 'lucide-react';
+import { Trash } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
 
 import { AdminContext } from './page';
 import { AdminQuestion } from '@/lib/types';
 import { Button } from '@/components/ui/button';
+import EditQuestionDialog from '@/components/dialog/EditQuestionDialog';
 
 interface ActionsProps {
+  oldCategory: string;
   questionId: number;
 }
 
-const Actions = ({ questionId }: ActionsProps) => {
+const Actions = ({ oldCategory, questionId }: ActionsProps) => {
   const { deleteQuestion } = useContext(AdminContext);
 
   const handleDeleteQuestionClick = async () => {
@@ -20,10 +22,8 @@ const Actions = ({ questionId }: ActionsProps) => {
   };
 
   return (
-    <div className="flex justify-center gap-2">
-      <Button variant="outline" size="icon">
-        <Pencil className="w-4 h-4" />
-      </Button>
+    <div className="flex gap-2 justify-center">
+      <EditQuestionDialog oldCategory={oldCategory} questionId={questionId} />
       <Button onClick={handleDeleteQuestionClick} variant="outline" size="icon">
         <Trash className="w-4 h-4" />
       </Button>
@@ -34,8 +34,8 @@ const Actions = ({ questionId }: ActionsProps) => {
 export const columns: ColumnDef<AdminQuestion>[] = [
   {
     header: 'การจัดการ',
-    size: 0,
-    cell: ({ row }) => <Actions questionId={row.original.id} />,
+    cell: ({ row }) => <Actions oldCategory={row.original.category} questionId={row.original.id} />,
+    size: 200,
   },
   {
     accessorKey: 'imagePath',
@@ -55,17 +55,27 @@ export const columns: ColumnDef<AdminQuestion>[] = [
     cell: ({ row }) => {
       const answer = row.getValue('answer') as AdminQuestion['answer'];
       if (typeof answer === 'string') {
-        return <p>{answer}</p>;
+        return <p className="text-center">{answer}</p>;
       }
       const { first, second, third, fourth } = answer;
       return (
-        <ul className="flex flex-col gap-2">
-          <li>1. {first}</li>
-          <li>2. {second}</li>
-          <li>3. {third}</li>
-          <li>4. {fourth}</li>
-        </ul>
+        <div className="flex justify-center items-center">
+          <ul className="flex flex-col gap-2">
+            <li>1. {first}</li>
+            <li>2. {second}</li>
+            <li>3. {third}</li>
+            <li>4. {fourth}</li>
+          </ul>
+        </div>
       );
+    },
+  },
+  {
+    accessorKey: 'meaning',
+    header: 'ความหมาย',
+    size: 300,
+    cell: ({ row }) => {
+      return <p className="text-center">{row.getValue('meaning') || '-'}</p>;
     },
   },
 ];

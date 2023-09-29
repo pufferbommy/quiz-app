@@ -35,7 +35,7 @@ export const columns: ColumnDef<AdminQuestion>[] = [
   {
     header: 'การจัดการ',
     cell: ({ row }) => <Actions oldCategory={row.original.category} questionId={row.original.id} />,
-    size: 200,
+    size: 150,
   },
   {
     accessorKey: 'imagePath',
@@ -73,7 +73,7 @@ export const columns: ColumnDef<AdminQuestion>[] = [
   {
     accessorKey: 'meaning',
     header: 'ความหมาย',
-    size: 300,
+    size: 500,
     cell: ({ row }) => {
       return <p className="text-center">{row.getValue('meaning') || '-'}</p>;
     },

@@ -47,7 +47,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                   return (
                     <TableHead
                       className="text-center"
-                      style={{ width: header.getSize() !== 150 ? header.getSize() : undefined }}
+                      style={{ width: header.getSize() }}
                       key={header.id}
                     >
                       {header.isPlaceholder

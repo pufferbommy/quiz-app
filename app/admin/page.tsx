@@ -107,8 +107,8 @@ const Admin = () => {
       }}
     >
       <Title>แอดมิน</Title>
-      <div className="mb-4 flex items-end gap-8 justify-between">
-        <div className="flex gap-8">
+      <div className="mb-4 flex gap-8 flex-col md:flex-row items-center md:justify-between">
+        <div className="flex flex-wrap justify-center md:justify-between gap-8">
           <div className="flex gap-2 items-center">
             <h3>หมวดหลัก</h3>
             {renderCategoryButton('verse', 'กลอน')}

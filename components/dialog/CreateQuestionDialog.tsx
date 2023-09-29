@@ -127,10 +127,19 @@ const CreateQuestionDialog = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button onClick={() => setOpen(true)}>
-          <Plus className="w-4 h-4 mr-1" />
-          เพิ่ม
-        </Button>
+        <>
+          <Button className="hidden md:inline-flex md:gap-1" onClick={() => setOpen(true)}>
+            <Plus className="w-4 h-4" />
+            <span>เพิ่ม</span>
+          </Button>
+          <Button
+            size="icon"
+            className="fixed w-14 h-14 bottom-4 right-4 md:hidden"
+            onClick={() => setOpen(true)}
+          >
+            <Plus className="w-6 h-6" />
+          </Button>
+        </>
       </DialogTrigger>
       <DialogContent autoFocus={false} className="sm:max-w-[425px] overflow-y-scroll max-h-screen">
         <DialogHeader>

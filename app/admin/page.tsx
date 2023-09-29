@@ -106,7 +106,7 @@ const Admin = () => {
         fetchQuestions,
       }}
     >
-      <Title>แอดมิน</Title>
+      <Title className="text-center md:text-left mt-8">คำถาม</Title>
       <div className="mb-4 flex gap-8 flex-col md:flex-row items-center md:justify-between">
         <div className="flex flex-wrap justify-center md:justify-between gap-8">
           <div className="flex gap-2 items-center">

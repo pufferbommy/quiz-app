@@ -134,7 +134,7 @@ const CreateQuestionDialog = () => {
           </Button>
           <Button
             size="icon"
-            className="fixed w-14 h-14 bottom-4 right-4 md:hidden"
+            className="fixed w-14 h-14 top-4 right-4 md:hidden"
             onClick={() => setOpen(true)}
           >
             <Plus className="w-6 h-6" />

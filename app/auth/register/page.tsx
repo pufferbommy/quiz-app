@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import Title from '@/components/text/title';
+import Title from '@/components/text/Title';
 import { Button } from '@/components/ui/button';
 import RegisterForm from '@/components/form/RegisterForm';
 

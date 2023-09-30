@@ -10,7 +10,7 @@ import {
 } from '@/lib/types';
 import { columns } from './columns';
 import { DataTable } from './data-table';
-import Title from '@/components/text/title';
+import Title from '@/components/text/Title';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import withAdminAuth from '@/components/wrapper/withAdminAuth';

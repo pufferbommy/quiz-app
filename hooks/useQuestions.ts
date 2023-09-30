@@ -24,7 +24,7 @@ const useQuestions = (url: string) => {
       shuffleQuestions();
     };
     fetchQuestions();
-  }, [url]);
+  }, [url, shuffleQuestions]);
 
   return { questions, shuffleQuestions };
 };

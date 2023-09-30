@@ -31,7 +31,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
     if (totalRounds % questions.length === 1) {
       shuffleQuestions();
     }
-  }, [totalRounds]);
+  }, [totalRounds, questions.length, shuffleQuestions]);
 
   return (
     <>

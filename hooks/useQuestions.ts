@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Question, QuestionsData, StatusMessageDataResponse } from '@/lib/types';
 
 const useQuestions = (url: string) => {
   const [questions, setQuestions] = useState<Question[]>([]);
 
-  const shuffleQuestions = () => {
+  const shuffleQuestions = useCallback(() => {
     setQuestions(questions => {
       const newQuestions = [...questions];
       for (let i = newQuestions.length - 1; i > 0; i--) {
@@ -14,7 +14,7 @@ const useQuestions = (url: string) => {
       }
       return newQuestions;
     });
-  };
+  }, []);
 
   useEffect(() => {
     const fetchQuestions = async () => {

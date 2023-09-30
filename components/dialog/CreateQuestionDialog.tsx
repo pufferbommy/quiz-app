@@ -35,7 +35,7 @@ import {
 } from '@/schemas/joke/question';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
-import { AdminContext } from '@/app/admin/page';
+import AdminContext from '@/contexts/adminContext';
 
 const CreateQuestionDialog = () => {
   const { fetchQuestions } = useContext(AdminContext);
@@ -122,7 +122,7 @@ const CreateQuestionDialog = () => {
       setCategory(null);
       setSubCategory(null);
     }
-  }, [open]);
+  }, [open, imageForm, verseForm, selectedImageUrl]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

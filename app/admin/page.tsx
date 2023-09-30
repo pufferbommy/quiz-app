@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
   AdminQuestion,
@@ -15,14 +15,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import withAdminAuth from '@/components/wrapper/withAdminAuth';
 import CreateQuestionDialog from '@/components/dialog/CreateQuestionDialog';
-
-export const AdminContext = createContext<{
-  deleteQuestion: (questionId: number) => Promise<void>;
-  fetchQuestions: () => Promise<void>;
-}>({
-  deleteQuestion: async () => {},
-  fetchQuestions: async () => {},
-});
+import { AdminProvider } from '@/contexts/adminContext';
 
 const Admin = () => {
   const { toast } = useToast();
@@ -100,7 +93,7 @@ const Admin = () => {
   }, [fetchQuestions]);
 
   return (
-    <AdminContext.Provider
+    <AdminProvider
       value={{
         deleteQuestion,
         fetchQuestions,
@@ -123,7 +116,7 @@ const Admin = () => {
         <CreateQuestionDialog />
       </div>
       <DataTable columns={columns} data={questions} />
-    </AdminContext.Provider>
+    </AdminProvider>
   );
 };
 

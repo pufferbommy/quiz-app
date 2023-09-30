@@ -37,7 +37,7 @@ import {
 } from '@/schemas/joke/question';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
-import { AdminContext } from '@/app/admin/page';
+import AdminContext from '@/contexts/adminContext';
 
 interface EditQuestionDialogProps {
   oldCategory: string;
@@ -163,7 +163,7 @@ const EditQuestionDialog = ({ oldCategory, questionId }: EditQuestionDialogProps
       setCategory(null);
       setSubCategory(null);
     }
-  }, [open]);
+  }, [open, imageForm, verseForm, oldCategory, questionId]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

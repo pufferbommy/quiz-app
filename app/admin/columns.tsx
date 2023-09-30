@@ -3,10 +3,10 @@ import { useContext } from 'react';
 import { Trash } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
 
-import { AdminContext } from './page';
 import { AdminQuestion } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import EditQuestionDialog from '@/components/dialog/EditQuestionDialog';
+import AdminContext from '@/contexts/adminContext';
 
 interface ActionsProps {
   oldCategory: string;

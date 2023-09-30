@@ -4,6 +4,7 @@ import { Question, QuestionsData, StatusMessageDataResponse } from '@/lib/types'
 
 const useQuestions = (url: string) => {
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const shuffleQuestions = useCallback(() => {
     setQuestions(questions => {
@@ -21,12 +22,13 @@ const useQuestions = (url: string) => {
       const response = await fetch(url);
       const result: StatusMessageDataResponse<QuestionsData> = await response.json();
       setQuestions(result.data.questions);
+      setIsLoading(false);
       shuffleQuestions();
     };
     fetchQuestions();
   }, [url, shuffleQuestions]);
 
-  return { questions, shuffleQuestions };
+  return { questions, isLoading, shuffleQuestions };
 };
 
 export default useQuestions;

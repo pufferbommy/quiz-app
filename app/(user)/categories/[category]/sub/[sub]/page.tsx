@@ -13,7 +13,7 @@ import ImageForm from '@/components/form/ImageForm';
 const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const { category, sub } = params;
   const url = `/api/v1/jokes/${category}s/${sub}`;
-  const { questions, shuffleQuestions } = useQuestions(url);
+  const { questions, isLoading, shuffleQuestions } = useQuestions(url);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [isBreak, setIsBreak] = useState(false);
   const [totalRounds, setTotalRounds] = useState(1);
@@ -67,52 +67,69 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
             </svg>
           </Button>
           <h1 className="text-4xl mb-4 text-center">{title}</h1>
-          <div className="relative rounded-md border border-input overflow-hidden mb-4 aspect-video">
-            <span
-              className={`absolute z-10 inset-0 duration-300 flex justify-center items-center ${
-                isLoadingImage ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              กำลังโหลดรูป...
-            </span>
-            {questions.map(q => (
-              <Fragment key={q.id}>
-                {q.id === question.id && (
-                  <Image
-                    key={q.imagePath}
-                    className={`transition-opacity duration-500 ${
-                      isLoadingImage ? 'opacity-0' : 'opacity-100'
-                    }`}
-                    sizes="100%"
-                    priority
-                    quality={75}
-                    src={q.imagePath}
-                    onLoadingComplete={() => {
-                      setIsLoadingImage(false);
-                    }}
-                    alt=""
-                    fill
-                  />
-                )}
-              </Fragment>
-            ))}
-          </div>
-          {category === 'verse' ? (
-            <VerseForm
-              isLoadingImage={isLoadingImage}
-              setIsLoadingImage={setIsLoadingImage}
-              questionId={question?.id}
-              url={url}
-              nextQuestion={nextQuestion}
-            />
-          ) : (
-            <ImageForm
-              isLoadingImage={isLoadingImage}
-              setIsLoadingImage={setIsLoadingImage}
-              questionId={question?.id}
-              url={url}
-              nextQuestion={nextQuestion}
-            />
+          {!isLoading && questions.length > 0 && (
+            <div className="relative rounded-md border border-input overflow-hidden mb-4 aspect-video">
+              <span
+                className={`absolute z-10 inset-0 duration-300 flex justify-center items-center ${
+                  isLoadingImage ? 'opacity-100' : 'opacity-0'
+                }`}
+              >
+                กำลังโหลดรูป...
+              </span>
+              {questions.map(q => (
+                <Fragment key={q.id}>
+                  {q.id === question.id && (
+                    <Image
+                      key={q.imagePath}
+                      className={`transition-opacity duration-500 ${
+                        isLoadingImage ? 'opacity-0' : 'opacity-100'
+                      }`}
+                      sizes="100%"
+                      priority
+                      quality={75}
+                      src={q.imagePath}
+                      onLoadingComplete={() => {
+                        setIsLoadingImage(false);
+                      }}
+                      alt=""
+                      fill
+                    />
+                  )}
+                </Fragment>
+              ))}
+            </div>
+          )}
+          {!isLoading && questions.length === 0 && (
+            <div className="flex flex-col items-center">
+              <p>ไม่มีข้อมูล</p>
+              <Logo />
+              <Link className="w-full" href="/">
+                <Button className="w-full" variant="outline">
+                  กลับสู่หน้าหลัก
+                </Button>
+              </Link>
+            </div>
+          )}
+          {!isLoading && questions.length > 0 && (
+            <>
+              {category === 'verse' ? (
+                <VerseForm
+                  isLoadingImage={isLoadingImage}
+                  setIsLoadingImage={setIsLoadingImage}
+                  questionId={question?.id}
+                  url={url}
+                  nextQuestion={nextQuestion}
+                />
+              ) : (
+                <ImageForm
+                  isLoadingImage={isLoadingImage}
+                  setIsLoadingImage={setIsLoadingImage}
+                  questionId={question?.id}
+                  url={url}
+                  nextQuestion={nextQuestion}
+                />
+              )}
+            </>
           )}
         </>
       )}

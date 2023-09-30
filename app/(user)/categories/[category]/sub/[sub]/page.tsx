@@ -9,6 +9,7 @@ import useQuestions from '@/hooks/useQuestions';
 import { Button } from '@/components/ui/button';
 import VerseForm from '@/components/form/VerseForm';
 import ImageForm from '@/components/form/ImageForm';
+import PauseMenu from '@/components/game/PauseMenu';
 
 const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   const { category, sub } = params;
@@ -36,17 +37,7 @@ const Sub = ({ params }: { params: { category: string; sub: string } }) => {
   return (
     <>
       {isBreak ? (
-        <>
-          <Logo />
-          <div className="flex flex-col gap-3">
-            <Button onClick={() => setIsBreak(false)}>เล่นต่อ</Button>
-            <Link href="/">
-              <Button variant="outline" className="w-full">
-                ออกจากเกม
-              </Button>
-            </Link>
-          </div>
-        </>
+        <PauseMenu resumeGame={() => setIsBreak(true)} />
       ) : (
         <>
           <Button

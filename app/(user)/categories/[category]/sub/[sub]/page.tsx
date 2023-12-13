@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Settings } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import Logo from '@/components/Logo';
+import Logo from '@/components/logo';
 import useQuestions from '@/hooks/useQuestions';
 import { Button } from '@/components/ui/button';
 import VerseForm from '@/components/form/VerseForm';

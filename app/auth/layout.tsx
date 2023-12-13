@@ -1,6 +1,6 @@
 'use client';
 
-import Logo from '@/components/Logo';
+import Logo from '@/components/logo';
 import CenteredLayout from '@/layouts/CenteredLayout';
 import withoutAuth from '@/components/wrapper/withoutAuth';
 

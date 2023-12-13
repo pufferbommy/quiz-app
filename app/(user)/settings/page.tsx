@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import Title from '@/components/text/Title';
+import Title from '@/components/text/title';
 import { Button } from '@/components/ui/button';
 import SettingsForm from '@/components/form/SettingsForm';
 import { useToast } from '@/components/ui/use-toast';

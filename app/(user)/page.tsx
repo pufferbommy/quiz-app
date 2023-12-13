@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import Logo from '@/components/Logo';
-import Title from '@/components/text/Title';
+import Logo from '@/components/logo';
+import Title from '@/components/text/title';
 import { Button } from '@/components/ui/button';
 import { categories } from '@/constants/categories';
 

@@ -57,8 +57,9 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(
     {
-      message: isCorrect,
-      description: isCorrect ? 'ยังไม่พร้อมใช้งาน' : undefined,
+      isCorrect,
+      answer: isCorrect ? question?.answer : undefined,
+      meaning: isCorrect ? question?.meaning : undefined,
     },
     {
       status: 200,
